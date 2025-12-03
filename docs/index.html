@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BelegCockpit | Das Cockpit für Belegvollständigkeit</title>
+
+    <!-- Tailwind per CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -41,9 +43,15 @@
         },
       };
     </script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+
     <style>
       body {
         font-family: 'Inter', sans-serif;
@@ -73,36 +81,39 @@
       .status-pill {
         display: inline-flex;
         align-items: center;
-        font-size: 0.875rem; /* 14px */
+        font-size: 0.875rem;
         font-weight: 500;
-        padding: 0.25rem 0.75rem; /* 4px 12px */
+        padding: 0.25rem 0.75rem;
         border-radius: 9999px;
       }
       .status-pill-green {
-          background-color: #ecfdf5; /* green-50 */
-          color: #065f46; /* green-800 */
+        background-color: #ecfdf5;
+        color: #065f46;
       }
       .status-pill-red {
-          background-color: #fef2f2; /* red-50 */
-          color: #991b1b; /* red-800 */
+        background-color: #fef2f2;
+        color: #991b1b;
       }
-
-      /* Animation Styles */
       .revealable {
         opacity: 0;
         transform: translateY(30px);
-        transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transition:
+          opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
       .revealed {
         opacity: 1;
         transform: translateY(0);
       }
       .accordion-content {
-        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in-out;
+        transition:
+          max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.3s ease-in-out;
         overflow: hidden;
       }
     </style>
 
+    <!-- Importmap für React aus AI Studio -->
     <script type="importmap">
     {
       "imports": {
@@ -112,31 +123,30 @@
       }
     }
     </script>
+
+    <!-- Gebautes React-Bundle (relativer Pfad!) -->
     <script type="module" crossorigin src="assets/index-KTTnzCpt.js"></script>
   </head>
+
   <body class="bg-slate-50 text-slate-900">
+    <!-- React root -->
     <div id="root"></div>
 
-    <!-- Footer mit Impressum / Datenschutz -->
-<!-- Footer mit Impressum / Datenschutz -->
-<footer class="border-t bg-white mt-10">
-  <div class="max-w-5xl mx-auto px-4 py-4 text-xs text-slate-500 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-    <span>© BelegCockpit</span>
-    <span class="space-x-3">
-      <a
-        href="https://www.belegcockpit.de/impressum.html"
-        class="hover:underline"
-      >
-        Impressum
-      </a>
-      <a
-        href="https://www.belegcockpit.de/datenschutz.html"
-        class="hover:underline"
-      >
-        Datenschutz
-      </a>
-    </span>
-  </div>
-</footer>
+    <!-- Fix: Alle „Impressum“/„Datenschutz“-Links (Header + Footer der App) auf die richtigen Seiten setzen -->
+    <script>
+      window.addEventListener('load', function () {
+        const mapping = {
+          'Impressum': 'https://www.belegcockpit.de/impressum.html',
+          'Datenschutz': 'https://www.belegcockpit.de/datenschutz.html'
+        };
+
+        document.querySelectorAll('a').forEach(function (a) {
+          const label = a.textContent.trim();
+          if (mapping[label]) {
+            a.setAttribute('href', mapping[label]);
+          }
+        });
+      });
+    </script>
   </body>
 </html>
