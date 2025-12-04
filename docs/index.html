@@ -133,69 +133,91 @@
     <div id="root"></div>
 
     <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
+        <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
+        <!-- Nur: Links + Texte + Hero-Bild nachträglich anpassen -->
     <script>
-  window.addEventListener('load', function () {
-    // 1) Footer-Links auf statische Seiten setzen
-    const mapping = {
-      Impressum: 'https://www.belegcockpit.de/impressum.html',
-      Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
-    };
+      window.addEventListener('load', function () {
+        // 1) Footer-Links auf statische Seiten setzen
+        const mapping = {
+          Impressum: 'https://www.belegcockpit.de/impressum.html',
+          Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
+        };
 
-    document.querySelectorAll('a').forEach(function (a) {
-      const label = (a.textContent || '').trim();
-      if (mapping[label]) {
-        a.setAttribute('href', mapping[label]);
-      }
-    });
-
-    // 2) Text "Warum nicht einfach DATEV & Co.?" -> "Warum nicht einfach Standard-Software?"
-    const OLD_TEXTS = [
-      'Warum nicht einfach DATEV & Co.?',
-      'Warum nicht einfach DATEV & Co.?'  // Variante mit geschützten Leerzeichen
-    ];
-    const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
-
-    function replaceHeadlineText() {
-      const walker = document.createTreeWalker(
-        document.body,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-      );
-
-      let node;
-      while ((node = walker.nextNode())) {
-        if (!node.nodeValue) continue;
-        let value = node.nodeValue;
-        let changed = false;
-
-        OLD_TEXTS.forEach(function (oldText) {
-          if (value.includes(oldText)) {
-            value = value.replace(oldText, NEW_TEXT);
-            changed = true;
+        document.querySelectorAll('a').forEach(function (a) {
+          const label = (a.textContent || '').trim();
+          if (mapping[label]) {
+            a.setAttribute('href', mapping[label]);
           }
         });
 
-        if (changed) {
-          node.nodeValue = value;
+        // 2) Text "Warum nicht einfach DATEV & Co.?" -> "Warum nicht einfach Standard-Software?"
+        const OLD_TEXTS = [
+          'Warum nicht einfach DATEV & Co.?',
+          'Warum nicht einfach DATEV & Co.?', // Variante mit geschützten Leerzeichen
+        ];
+        const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
+
+        function replaceHeadlineText() {
+          const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+          );
+
+          let node;
+          while ((node = walker.nextNode())) {
+            if (!node.nodeValue) continue;
+            let value = node.nodeValue;
+            let changed = false;
+
+            OLD_TEXTS.forEach(function (oldText) {
+              if (value.includes(oldText)) {
+                value = value.replace(oldText, NEW_TEXT);
+                changed = true;
+              }
+            });
+
+            if (changed) {
+              node.nodeValue = value;
+            }
+          }
         }
-      }
-    }
 
-    // einmal direkt ausführen
-    replaceHeadlineText();
+        // 3) Hero-Bild austauschen
+        (function replaceHeroImage() {
+          const NEW_HERO_SRC = 'assets/belegcockpit-hero.png';
 
-    // und auf spätere DOM-Änderungen reagieren (falls React nachlädt)
-    const observer = new MutationObserver(function () {
-      replaceHeadlineText();
-    });
+          // Wir suchen das große Mockup-Bild über den Alt-Text
+          const heroImg = Array.from(document.querySelectorAll('img')).find(
+            function (img) {
+              const alt = (img.alt || '').toLowerCase();
+              return (
+                alt.includes('belegcockpit') ||
+                alt.includes('cockpit für belegvollständigkeit')
+              );
+            }
+          );
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
-  });
-</script>
+          if (heroImg) {
+            heroImg.src = NEW_HERO_SRC;
+          }
+        })();
+
+        // 2) einmal direkt ausführen
+        replaceHeadlineText();
+
+        // und auf spätere DOM-Änderungen reagieren (falls React nachlädt)
+        const observer = new MutationObserver(function () {
+          replaceHeadlineText();
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+        });
+      });
+    </script>
   </body>
 </html>
