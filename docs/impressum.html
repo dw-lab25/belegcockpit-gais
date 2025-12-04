@@ -1,159 +1,181 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Impressum | BelegCockpit</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
-</head>
-<body class="bg-slate-50 text-slate-900">
-  <div class="min-h-screen flex flex-col">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Impressum | BelegCockpit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background-color: #0f172a;
+        color: #e5e7eb;
+      }
+      .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      header {
+        padding: 1.5rem 1.5rem 0.5rem;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+      }
+      .header-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 0.75rem;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+      }
+      .logo-text-main {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+      .logo-text-sub {
+        font-size: 0.75rem;
+        color: #9ca3af;
+      }
+      .back-link {
+        font-size: 0.875rem;
+        color: #a5b4fc;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        text-decoration: underline;
+      }
+      main {
+        flex: 1;
+        padding: 2.5rem 1.5rem 3rem;
+      }
+      .content {
+        max-width: 960px;
+        margin: 0 auto;
+        background: rgba(15, 23, 42, 0.6);
+        border-radius: 1rem;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        padding: 2rem;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.6);
+      }
+      h1 {
+        font-size: 1.75rem;
+        margin: 0 0 1.5rem;
+      }
+      h2 {
+        font-size: 1.125rem;
+        margin: 2rem 0 0.75rem;
+      }
+      p {
+        margin: 0.25rem 0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .legal-note {
+        margin-top: 1.5rem;
+        font-size: 0.875rem;
+        color: #9ca3af;
+      }
+      footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.3);
+        padding: 1rem 1.5rem 1.5rem;
+        font-size: 0.75rem;
+        color: #9ca3af;
+      }
+      .footer-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      a {
+        color: #a5b4fc;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="header-inner">
+          <div class="logo">
+            <div class="logo-icon">BC</div>
+            <div>
+              <div class="logo-text-main">BelegCockpit</div>
+              <div class="logo-text-sub">Cockpit für Belegvollständigkeit</div>
+            </div>
+          </div>
+          <a href="https://www.belegcockpit.de" class="back-link">Zurück zur Startseite</a>
+        </div>
+      </header>
 
-    <!-- Header -->
-    <header class="border-b bg-white">
-      <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="https://www.belegcockpit.de/index.html" class="font-semibold text-lg">BelegCockpit</a>
-        <nav class="space-x-4 text-sm">
-          <a href="https://www.belegcockpit.de/index.html" class="hover:underline">Start</a>
-          <a href="https://www.belegcockpit.de/impressum.html" class="font-semibold hover:underline">Impressum</a>
-          <a href="https://www.belegcockpit.de/datenschutz.html" class="hover:underline">Datenschutz</a>
-        </nav>
-      </div>
-    </header>
+      <main>
+        <div class="content">
+          <h1>Impressum</h1>
 
-    <!-- Main -->
-    <main class="flex-1">
-      <div class="max-w-5xl mx-auto px-4 py-10">
-        <h1 class="text-3xl font-bold mb-6">Impressum</h1>
-
-        <p class="mb-4 text-sm text-red-700 font-medium">
-          Hinweis: Dieses Impressum ist eine allgemeine Vorlage und ersetzt keine individuelle Rechtsberatung.
-          Bitte lassen Sie den Inhalt von einer Rechtsanwältin / einem Rechtsanwalt oder einem spezialisierten Dienst prüfen
-          und an Ihr konkretes Angebot anpassen.
-        </p>
-
-        <!-- Verantwortlicher -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">1. Anbieter dieser Website</h2>
-          <p class="text-sm leading-relaxed">
-            Verantwortlich für den Inhalt dieser Website gemäß § 5 DDG und § 18 MStV ist:
-          </p>
-          <p class="text-sm leading-relaxed mt-3">
-            <strong>XXX</strong><br>
-            [Straße, Hausnummer]<br>
-            [PLZ, Ort]<br>
-            [Land]<br><br>
-            Telefon: [Telefonnummer]<br>
-            E-Mail: [E-Mail-Adresse]<br>
-          </p>
-
-          <p class="text-sm leading-relaxed mt-4">
-            <strong>Hinweis zum Produktkonzept</strong><br>
-            „BelegCockpit“ ist derzeit ein Produktkonzept der XXX.<br>
-            Diese Website dient dazu, das Interesse an diesem Konzept zu testen.<br>
+          <p>
+            „BelegCockpit“ ist derzeit ein Produktkonzept der digitalwirt GmbH.
+            Diese Website dient dazu, das Interesse an diesem Konzept zu testen.
             Ein verbindliches Leistungsangebot besteht derzeit noch nicht.
           </p>
-        </section>
 
-        <!-- Vertretungsberechtigte -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">2. Vertretungsberechtigte Person</h2>
-          <p class="text-sm leading-relaxed">
-            Vertretungsberechtigte/r Geschäftsführer/in:<br>
-            [Name der vertretungsberechtigten Person]
-          </p>
-        </section>
+          <h2>Angaben gemäß § 5 TMG</h2>
+          <p>digitalwirt GmbH</p>
+          <p>Dorfstr. 27c</p>
+          <p>25495 Kummerfeld</p>
+          <p>Deutschland</p>
 
-        <!-- Register -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">3. Registereintrag</h2>
-          <p class="text-sm leading-relaxed">
-            Eintragung im Handelsregister.<br>
-            Registergericht: [Amtsgericht]<br>
-            Registernummer: [HRB-Nummer]
-          </p>
-        </section>
+          <h2>Kontakt</h2>
+          <p>Telefon: +49 160 97745546</p>
+          <p>E-Mail: moin@digitalwirt.de</p>
 
-        <!-- Umsatzsteuer -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">4. Umsatzsteuer-ID</h2>
-          <p class="text-sm leading-relaxed">
-            Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz:<br>
-            [USt-IdNr.]
-          </p>
-        </section>
+          <h2>Vertreten durch</h2>
+          <p>Geschäftsführer: Andrea Lunow</p>
 
-        <!-- Verantwortlich für Inhalte -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">5. Verantwortlichkeit für Inhalte</h2>
-          <p class="text-sm leading-relaxed">
-            Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen
-            Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet,
-            übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen,
-            die auf eine rechtswidrige Tätigkeit hinweisen.
-          </p>
-          <p class="text-sm leading-relaxed mt-3">
-            Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen
-            bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer
-            konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese
-            Inhalte umgehend entfernen.
-          </p>
-        </section>
+          <h2>Registereintrag</h2>
+          <p>Handelsregister: Amtsgericht Pinneberg, HRB 15922 PI</p>
 
-        <!-- Haftung für Links -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">6. Haftung für Links</h2>
-          <p class="text-sm leading-relaxed">
-            Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben.
-            Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten
-            Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten
-            wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum
-            Zeitpunkt der Verlinkung nicht erkennbar.
-          </p>
-          <p class="text-sm leading-relaxed mt-3">
-            Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer
-            Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links
-            umgehend entfernen.
-          </p>
-        </section>
+          <h2>Umsatzsteuer</h2>
+          <p>Umsatzsteuer-Identifikationsnummer gemäß §27 a UStG: DE342993279</p>
 
-        <!-- Urheberrecht -->
-        <section class="mb-4">
-          <h2 class="text-xl font-semibold mb-2">7. Urheberrecht</h2>
-          <p class="text-sm leading-relaxed">
-            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
-            Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
-            Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
-            Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+          <p class="legal-note">
+            Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV ist die digitalwirt GmbH
+            (Anschrift wie oben).
           </p>
-          <p class="text-sm leading-relaxed mt-3">
-            Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter
-            beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine
-            Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von
-            Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
-          </p>
-        </section>
+        </div>
+      </main>
 
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t bg-white">
-      <div class="max-w-5xl mx-auto px-4 py-4 text-xs text-slate-500 flex justify-between">
-        <span>© BelegCockpit</span>
-        <span class="space-x-3">
-          <a href="https://www.belegcockpit.de/impressum.html" class="hover:underline">Impressum</a>
-          <a href="https://www.belegcockpit.de/datenschutz.html" class="hover:underline">Datenschutz</a>
-        </span>
-      </div>
-    </footer>
-
-  </div>
-</body>
+      <footer>
+        <div class="footer-inner">
+          <span>© 2025 BelegCockpit / digitalwirt GmbH. Alle Rechte vorbehalten.</span>
+          <span>Stand: Februar 2025</span>
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>
