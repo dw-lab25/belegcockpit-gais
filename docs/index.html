@@ -45,12 +45,12 @@
     </script>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
-    >
+    />
 
     <style>
       body {
@@ -124,7 +124,7 @@
     }
     </script>
 
-    <!-- Gebautes React-Bundle (relativer Pfad!) -->
+    <!-- Gebautes React-Bundle -->
     <script type="module" crossorigin src="assets/index-KTTnzCpt.js"></script>
   </head>
 
@@ -132,21 +132,40 @@
     <!-- React root -->
     <div id="root"></div>
 
-    <!-- Fix: Alle „Impressum“/„Datenschutz“-Links (Header + Footer der App) auf die richtigen Seiten setzen -->
+    <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
     <script>
-      window.addEventListener('load', function () {
-        const mapping = {
-          'Impressum': 'https://www.belegcockpit.de/impressum.html',
-          'Datenschutz': 'https://www.belegcockpit.de/datenschutz.html'
-        };
+  window.addEventListener('load', function () {
+    // 1) Footer-Links auf statische Seiten setzen
+    const mapping = {
+      Impressum: 'https://www.belegcockpit.de/impressum.html',
+      Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
+    };
 
-        document.querySelectorAll('a').forEach(function (a) {
-          const label = a.textContent.trim();
-          if (mapping[label]) {
-            a.setAttribute('href', mapping[label]);
-          }
-        });
-      });
-    </script>
+    document.querySelectorAll('a').forEach(function (a) {
+      const label = a.textContent.trim();
+      if (mapping[label]) {
+        a.setAttribute('href', mapping[label]);
+      }
+    });
+
+    // 2) Text "Warum nicht einfach DATEV & Co.?" ersetzen
+    const oldText = 'Warum nicht einfach DATEV & Co.?';
+    const newText = 'Warum nicht einfach Standard-Software?';
+
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    );
+
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue.includes(oldText)) {
+        node.nodeValue = node.nodeValue.replace(oldText, newText);
+      }
+    }
+  });
+</script>
   </body>
 </html>
