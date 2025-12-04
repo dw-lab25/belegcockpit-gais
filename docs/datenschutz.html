@@ -1,195 +1,287 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Datenschutzerklärung | BelegCockpit</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
-</head>
-<body class="bg-slate-50 text-slate-900">
-  <div class="min-h-screen flex flex-col">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Datenschutzerklärung | BelegCockpit</title>
 
-    <!-- Header -->
-    <header class="border-b bg-white">
-      <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="index.html" class="font-semibold text-lg">BelegCockpit</a>
-        <nav class="space-x-4 text-sm">
-          <a href="index.html" class="hover:underline">Start</a>
-          <a href="impressum.html" class="hover:underline">Impressum</a>
-          <a href="datenschutz.html" class="font-semibold hover:underline">Datenschutz</a>
-        </nav>
-      </div>
-    </header>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Main -->
-    <main class="flex-1">
-      <div class="max-w-5xl mx-auto px-4 py-10">
-        <h1 class="text-3xl font-bold mb-6">Datenschutzerklärung</h1>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-        <p class="mb-4 text-sm text-red-700 font-medium">
-          Hinweis: Diese Datenschutzerklärung ist eine allgemeine Vorlage und ersetzt keine individuelle Rechtsberatung.
-          Bitte lassen Sie den Inhalt von einer Rechtsanwältin / einem Rechtsanwalt oder einem spezialisierten Dienst prüfen
-          und an Ihr konkretes Angebot (Tracking-Tools, Hosting, Kontaktwege etc.) anpassen.
-        </p>
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background-color: #f9fafb;
+        color: #111827;
+      }
 
-        <!-- Verantwortlicher -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">1. Verantwortlicher</h2>
-          <p class="text-sm leading-relaxed">
-            Verantwortlich für die Verarbeitung personenbezogener Daten auf dieser Website ist:
+      .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        padding: 1.5rem 1.5rem 0.75rem;
+        border-bottom: 1px solid #e5e7eb;
+        background: #ffffff;
+      }
+
+      .header-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 0.75rem;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #111827;
+        background: #f9fafb;
+      }
+
+      .logo-text-main {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .logo-text-sub {
+        font-size: 0.75rem;
+        color: #6b7280;
+      }
+
+      .back-link {
+        font-size: 0.875rem;
+        color: #4f46e5;
+        text-decoration: none;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      main {
+        flex: 1;
+        padding: 2.5rem 1.5rem 3rem;
+      }
+
+      .content {
+        max-width: 960px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 1rem;
+        border: 1px solid #e5e7eb;
+        padding: 2rem 2.25rem;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin: 0 0 1.75rem;
+      }
+
+      h2 {
+        font-size: 1.125rem;
+        margin: 2rem 0 0.75rem;
+      }
+
+      p {
+        margin: 0.25rem 0;
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+
+      ul {
+        margin: 0.4rem 0 0.4rem 1.2rem;
+        padding: 0;
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+
+      footer {
+        border-top: 1px solid #e5e7eb;
+        padding: 1rem 1.5rem 1.5rem;
+        font-size: 0.8rem;
+        color: #6b7280;
+        background: #f9fafb;
+      }
+
+      .footer-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      a {
+        color: #4f46e5;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <header>
+        <div class="header-inner">
+          <div class="logo">
+            <div class="logo-icon">BC</div>
+            <div>
+              <div class="logo-text-main">BelegCockpit</div>
+              <div class="logo-text-sub">Cockpit für Belegvollständigkeit</div>
+            </div>
+          </div>
+          <a href="https://www.belegcockpit.de" class="back-link">
+            Zurück zur Startseite
+          </a>
+        </div>
+      </header>
+
+      <main>
+        <div class="content">
+          <h1>Datenschutzerklärung</h1>
+
+          <h2>1. Verantwortlicher</h2>
+          <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+          <p>digitalwirt GmbH</p>
+          <p>Dorfstr. 27c</p>
+          <p>25495 Kummerfeld</p>
+          <p>Deutschland</p>
+          <p>Telefon: +49 160 97745546</p>
+          <p>E-Mail: moin@digitalwirt.de</p>
+
+          <h2>2. Zweck und Umfang der Datenverarbeitung</h2>
+          <p>
+            Diese Website dient der Vorstellung des Produktkonzepts „BelegCockpit“
+            und der Erfassung von Interessen an diesem Konzept. Ein
+            verbindliches Leistungsangebot besteht derzeit noch nicht.
           </p>
-          <p class="text-sm leading-relaxed mt-3">
-            <strong>BelegCockpit / [Firmenname]</strong><br>
-            [Straße, Hausnummer]<br>
-            [PLZ, Ort]<br>
-            [Land]<br><br>
-            Telefon: [Telefonnummer]<br>
-            E-Mail: [E-Mail-Adresse]<br>
-          </p>
-        </section>
 
-        <!-- Allgemeines -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">2. Allgemeine Hinweise zur Datenverarbeitung</h2>
-          <p class="text-sm leading-relaxed mb-3">
-            Der Schutz Ihrer personenbezogenen Daten ist uns wichtig. Personenbezogene Daten sind alle Informationen,
-            mit denen Sie persönlich identifiziert werden können. Die nachfolgenden Hinweise geben einen Überblick
-            darüber, welche Daten wir erheben, zu welchen Zwecken wir sie nutzen und auf welcher Rechtsgrundlage dies geschieht.
+          <h2>3. Zugriffsdaten (Server-Logfiles)</h2>
+          <p>
+            Beim Aufruf dieser Website werden durch den Hoster automatisch
+            Informationen in sogenannten Server-Logfiles erhoben und
+            gespeichert. Dies sind insbesondere:
           </p>
-          <p class="text-sm leading-relaxed">
-            Die Verarbeitung personenbezogener Daten erfolgt im Einklang mit der Datenschutz-Grundverordnung (DSGVO) sowie den
-            einschlägigen nationalen Datenschutzvorschriften.
-          </p>
-        </section>
-
-        <!-- Ihre Rechte -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">3. Ihre Rechte</h2>
-          <p class="text-sm leading-relaxed mb-3">
-            Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen das Recht:
-          </p>
-          <ul class="list-disc list-inside text-sm leading-relaxed space-y-1">
-            <li>Auskunft über Ihre bei uns gespeicherten personenbezogenen Daten zu erhalten (Art. 15 DSGVO),</li>
-            <li>Berichtigung unrichtiger oder Vervollständigung unvollständiger Daten zu verlangen (Art. 16 DSGVO),</li>
-            <li>Löschung Ihrer Daten zu verlangen, soweit keine gesetzlichen Aufbewahrungspflichten entgegenstehen (Art. 17 DSGVO),</li>
-            <li>Einschränkung der Verarbeitung Ihrer Daten zu verlangen (Art. 18 DSGVO),</li>
-            <li>Widerspruch gegen die Verarbeitung Ihrer Daten einzulegen, soweit diese auf Art. 6 Abs. 1 lit. e oder f DSGVO beruht (Art. 21 DSGVO),</li>
-            <li>Datenübertragbarkeit zu verlangen, sofern die Verarbeitung auf Ihrer Einwilligung oder auf einem Vertrag beruht (Art. 20 DSGVO).</li>
+          <ul>
+            <li>IP-Adresse des anfragenden Endgeräts</li>
+            <li>Datum und Uhrzeit der Anfrage</li>
+            <li>abgerufene Datei / aufgerufene URL</li>
+            <li>übertragene Datenmenge</li>
+            <li>Browsertyp und Browserversion</li>
+            <li>verwendetes Betriebssystem</li>
           </ul>
-          <p class="text-sm leading-relaxed mt-3">
-            Zudem haben Sie das Recht, sich bei einer zuständigen Aufsichtsbehörde zu beschweren, wenn Sie der Ansicht sind,
-            dass die Verarbeitung Ihrer personenbezogenen Daten gegen datenschutzrechtliche Bestimmungen verstößt.
+          <p>
+            Die Verarbeitung dieser Daten erfolgt zur Sicherstellung eines
+            störungsfreien Betriebs der Website (Art. 6 Abs. 1 lit. f DSGVO).
+            Eine Zusammenführung dieser Daten mit anderen Datenquellen findet
+            nicht statt.
           </p>
-        </section>
 
-        <!-- Hosting / Server-Logs -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">4. Hosting und Server-Logfiles</h2>
-          <p class="text-sm leading-relaxed mb-3">
-            Diese Website wird über einen externen Dienstleister (Hosting-Provider) bereitgestellt. Der Betrieb der
-            Server ist erforderlich, um die Website zuverlässig und sicher auszuliefern. Grundlage hierfür ist unser
-            berechtigtes Interesse gemäß Art. 6 Abs. 1 lit. f DSGVO, die Website stabil und sicher bereitzustellen.
+          <h2>4. Kontaktaufnahme / Lead-Formular</h2>
+          <p>
+            Wenn Sie das auf der Website bereitgestellte Formular nutzen oder
+            uns per E-Mail kontaktieren, werden die von Ihnen eingegebenen Daten
+            (z. B. Name, Kanzleiname, E-Mail-Adresse sowie Ihre Nachricht) zum
+            Zweck der Bearbeitung Ihrer Anfrage verarbeitet.
           </p>
-          <p class="text-sm leading-relaxed mb-3">
-            Bei jedem Aufruf der Website werden durch den Hosting-Provider automatisch Informationen erhoben und in sogenannten
-            Server-Logfiles gespeichert. Dies sind insbesondere:
+          <p>
+            Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. b DSGVO
+            (Anbahnung eines Vertragsverhältnisses) bzw. Art. 6 Abs. 1 lit. f
+            DSGVO (berechtigtes Interesse an der Beantwortung Ihrer Anfrage).
           </p>
-          <ul class="list-disc list-inside text-sm leading-relaxed space-y-1">
-            <li>IP-Adresse des anfragenden Endgeräts,</li>
-            <li>Datum und Uhrzeit des Zugriffs,</li>
-            <li>aufgerufene Seite/Datei,</li>
-            <li>übertragene Datenmenge,</li>
-            <li>verwendeter Browsertyp und -version,</li>
-            <li>verwendetes Betriebssystem.</li>
+          <p>
+            Die Daten werden nur so lange gespeichert, wie dies für die
+            Bearbeitung Ihrer Anfrage und eine etwaige anschließende
+            Kommunikation erforderlich ist, sofern keine gesetzlichen
+            Aufbewahrungspflichten entgegenstehen.
+          </p>
+
+          <h2>5. Einsatz von Drittanbietern</h2>
+          <p>
+            Soweit bei der Übermittlung Ihrer Anfrage ein externer
+            Formular-Dienst oder E-Mail-Dienst eingesetzt wird, erfolgt dies
+            ausschließlich zu dem Zweck, Ihre Anfrage technisch zu übermitteln
+            und zuzustellen. Mit eingesetzten Dienstleistern bestehen
+            erforderlichenfalls Verträge zur Auftragsverarbeitung nach
+            Art. 28 DSGVO.
+          </p>
+
+          <h2>6. Cookies, Tracking und Analyse</h2>
+          <p>
+            Auf dieser Website werden derzeit keine Tools zur Webanalyse
+            (z. B. Google Analytics) und keine Marketing-Tracking-Dienste
+            eingesetzt. Werden solche Dienste künftig eingesetzt, wird diese
+            Datenschutzerklärung entsprechend ergänzt und, soweit rechtlich
+            erforderlich, eine Einwilligung eingeholt.
+          </p>
+
+          <h2>7. Ihre Rechte</h2>
+          <p>Sie haben im Rahmen der geltenden datenschutzrechtlichen Bestimmungen insbesondere das Recht auf</p>
+          <ul>
+            <li>Auskunft über die Sie betreffenden personenbezogenen Daten,</li>
+            <li>Berichtigung unrichtiger Daten,</li>
+            <li>Löschung Ihrer Daten, soweit keine Aufbewahrungspflichten bestehen,</li>
+            <li>Einschränkung der Verarbeitung,</li>
+            <li>Widerspruch gegen bestimmte Verarbeitungen sowie</li>
+            <li>Datenübertragbarkeit.</li>
           </ul>
-          <p class="text-sm leading-relaxed mt-3">
-            Die Logfiles werden für einen begrenzten Zeitraum gespeichert, um Angriffe oder Missbrauch erkennen und
-            analysieren zu können, und anschließend gelöscht oder anonymisiert, sofern keine weitergehende Aufbewahrung
-            aus Beweisgründen erforderlich ist.
+          <p>
+            Zudem haben Sie das Recht, sich bei einer Datenschutzaufsichtsbehörde
+            über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren.
           </p>
-        </section>
 
-        <!-- Kontakt -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">5. Kontaktaufnahme</h2>
-          <p class="text-sm leading-relaxed mb-3">
-            Wenn Sie mit uns Kontakt aufnehmen (z. B. per E-Mail oder über ein Kontaktformular), verarbeiten wir die von
-            Ihnen übermittelten personenbezogenen Daten (z. B. Name, E-Mail-Adresse, Inhalt der Anfrage), um Ihr Anliegen
-            zu bearbeiten und zu beantworten.
+          <h2>8. Stand dieser Datenschutzerklärung</h2>
+          <p>Stand: Februar 2025</p>
+          <p>
+            Durch die Weiterentwicklung dieser Website oder gesetzliche bzw.
+            behördliche Vorgaben kann eine Anpassung dieser
+            Datenschutzerklärung erforderlich werden. Es gilt stets die auf
+            dieser Seite abrufbare aktuelle Fassung.
           </p>
-          <p class="text-sm leading-relaxed">
-            Rechtsgrundlage für diese Verarbeitung ist Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung
-            eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen anderen
-            Fällen beruht die Verarbeitung auf unserem berechtigten Interesse gemäß Art. 6 Abs. 1 lit. f DSGVO, Ihr Anliegen
-            effizient zu bearbeiten, oder auf Ihrer Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, sofern diese eingeholt wurde.
-          </p>
-        </section>
+        </div>
+      </main>
 
-        <!-- Cookies / Tracking (Basic-Variante: kein Tracking) -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">6. Cookies und Tracking</h2>
-          <p class="text-sm leading-relaxed mb-3">
-            Aktuell setzen wir auf dieser Website keine Cookies zu Analyse-, Tracking- oder Marketingzwecken ein.
-          </p>
-          <p class="text-sm leading-relaxed">
-            Sollten zukünftig Analyse-Tools (z. B. Google Analytics), Marketing- oder Tracking-Cookies eingesetzt werden,
-            wird diese Datenschutzerklärung entsprechend angepasst und – sofern erforderlich – Ihre Einwilligung über ein
-            Consent-Management-Tool eingeholt.
-          </p>
-        </section>
-
-        <!-- Speicherdauer -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">7. Speicherdauer</h2>
-          <p class="text-sm leading-relaxed">
-            Soweit in dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, speichern wir
-            personenbezogene Daten nur so lange, wie es für die jeweiligen Zwecke erforderlich ist. Anschließend werden
-            die Daten gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
-          </p>
-        </section>
-
-        <!-- Datensicherheit -->
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">8. Datensicherheit</h2>
-          <p class="text-sm leading-relaxed">
-            Wir setzen technische und organisatorische Maßnahmen ein, um personenbezogene Daten vor Verlust, Missbrauch,
-            unbefugtem Zugriff oder Offenlegung zu schützen. Bitte beachten Sie jedoch, dass die Datenübertragung im
-            Internet (z. B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz
-            der Daten vor dem Zugriff durch Dritte ist nicht möglich.
-          </p>
-        </section>
-
-        <!-- Aktualität -->
-        <section class="mb-4">
-          <h2 class="text-xl font-semibold mb-2">9. Aktualität dieser Datenschutzerklärung</h2>
-          <p class="text-sm leading-relaxed">
-            Diese Datenschutzerklärung ist aktuell gültig und hat den Stand [Monat Jahr].<br>
-            Durch die Weiterentwicklung dieser Website oder aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben
-            kann es notwendig werden, diese Datenschutzerklärung anzupassen. Die jeweils aktuelle Version ist jederzeit
-            auf dieser Seite abrufbar.
-          </p>
-        </section>
-
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t bg-white">
-      <div class="max-w-5xl mx-auto px-4 py-4 text-xs text-slate-500 flex justify-between">
-        <span>© BelegCockpit</span>
-        <span class="space-x-3">
-          <a href="impressum.html" class="hover:underline">Impressum</a>
-          <a href="datenschutz.html" class="hover:underline">Datenschutz</a>
-        </span>
-      </div>
-    </footer>
-
-  </div>
-</body>
+      <footer>
+        <div class="footer-inner">
+          <span>© 2025 BelegCockpit / digitalwirt GmbH. Alle Rechte vorbehalten.</span>
+          <span>Stand: Februar 2025</span>
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>
