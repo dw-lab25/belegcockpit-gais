@@ -142,29 +142,52 @@
     };
 
     document.querySelectorAll('a').forEach(function (a) {
-      const label = a.textContent.trim();
+      const label = (a.textContent || '').trim();
       if (mapping[label]) {
         a.setAttribute('href', mapping[label]);
       }
     });
 
-    // 2) Headline "Warum nicht einfach DATEV & Co.?" -> "Warum nicht einfach Standard-Software?"
-    function replaceHeadline() {
-      const headings = document.querySelectorAll('h1, h2, h3');
-      headings.forEach(function (el) {
-        const text = (el.textContent || '').trim();
-        if (text.includes('Warum nicht einfach DATEV')) {
-          el.textContent = 'Warum nicht einfach Standard-Software?';
+    // 2) Text "Warum nicht einfach DATEV & Co.?" -> "Warum nicht einfach Standard-Software?"
+    const OLD_TEXTS = [
+      'Warum nicht einfach DATEV & Co.?',
+      'Warum nicht einfach DATEV & Co.?'  // Variante mit geschützten Leerzeichen
+    ];
+    const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
+
+    function replaceHeadlineText() {
+      const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      );
+
+      let node;
+      while ((node = walker.nextNode())) {
+        if (!node.nodeValue) continue;
+        let value = node.nodeValue;
+        let changed = false;
+
+        OLD_TEXTS.forEach(function (oldText) {
+          if (value.includes(oldText)) {
+            value = value.replace(oldText, NEW_TEXT);
+            changed = true;
+          }
+        });
+
+        if (changed) {
+          node.nodeValue = value;
         }
-      });
+      }
     }
 
     // einmal direkt ausführen
-    replaceHeadline();
+    replaceHeadlineText();
 
-    // und dann auf spätere Änderungen reagieren (falls React später rendert)
+    // und auf spätere DOM-Änderungen reagieren (falls React nachlädt)
     const observer = new MutationObserver(function () {
-      replaceHeadline();
+      replaceHeadlineText();
     });
 
     observer.observe(document.body, {
