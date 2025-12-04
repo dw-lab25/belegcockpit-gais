@@ -134,30 +134,19 @@
 
     <!-- Fix: Alle „Impressum“/„Datenschutz“-Links (Header + Footer der App) auf die richtigen Seiten setzen -->
     <script>
-  window.addEventListener('load', function () {
-    // 1) Links für Impressum / Datenschutz korrigieren
-    const mapping = {
-      'Impressum': 'https://www.belegcockpit.de/impressum.html',
-      'Datenschutz': 'https://www.belegcockpit.de/datenschutz.html'
-    };
+      window.addEventListener('load', function () {
+        const mapping = {
+          'Impressum': 'https://www.belegcockpit.de/impressum.html',
+          'Datenschutz': 'https://www.belegcockpit.de/datenschutz.html'
+        };
 
-    document.querySelectorAll('a').forEach(function (a) {
-      const label = a.textContent.trim();
-      if (mapping[label]) {
-        a.setAttribute('href', mapping[label]);
-      }
-    });
-
-    // 2) Headline-Text austauschen: "DATEV & Co." -> "Standardsoftware"
-    const oldText = 'Warum nicht einfach DATEV & Co.?';
-    const newText = 'Warum nicht einfach Standardsoftware?';
-
-    document.querySelectorAll('h1, h2, h3, p, span, div').forEach(function (el) {
-      if (el.textContent && el.textContent.includes(oldText)) {
-        el.textContent = el.textContent.replace(oldText, newText);
-      }
-    });
-  });
-</script>
+        document.querySelectorAll('a').forEach(function (a) {
+          const label = a.textContent.trim();
+          if (mapping[label]) {
+            a.setAttribute('href', mapping[label]);
+          }
+        });
+      });
+    </script>
   </body>
 </html>
