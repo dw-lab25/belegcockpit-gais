@@ -148,23 +148,30 @@
       }
     });
 
-    // 2) Text "Warum nicht einfach DATEV & Co.?" ersetzen
-    const oldText = 'Warum nicht einfach DATEV & Co.?';
-    const newText = 'Warum nicht einfach Standard-Software?';
-
-    const walker = document.createTreeWalker(
-      document.body,
-      NodeFilter.SHOW_TEXT,
-      null,
-      false
-    );
-
-    let node;
-    while ((node = walker.nextNode())) {
-      if (node.nodeValue.includes(oldText)) {
-        node.nodeValue = node.nodeValue.replace(oldText, newText);
-      }
+    // 2) Headline "Warum nicht einfach DATEV & Co.?" -> "Warum nicht einfach Standard-Software?"
+    function replaceHeadline() {
+      const headings = document.querySelectorAll('h1, h2, h3');
+      headings.forEach(function (el) {
+        const text = (el.textContent || '').trim();
+        if (text.includes('Warum nicht einfach DATEV')) {
+          el.textContent = 'Warum nicht einfach Standard-Software?';
+        }
+      });
     }
+
+    // einmal direkt ausführen
+    replaceHeadline();
+
+    // und dann auf spätere Änderungen reagieren (falls React später rendert)
+    const observer = new MutationObserver(function () {
+      replaceHeadline();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
   });
 </script>
   </body>
