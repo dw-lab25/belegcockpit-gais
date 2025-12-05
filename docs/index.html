@@ -136,88 +136,137 @@
         <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
         <!-- Nur: Links + Texte + Hero-Bild nachträglich anpassen -->
     <script>
-      window.addEventListener('load', function () {
-        // 1) Footer-Links auf statische Seiten setzen
-        const mapping = {
-          Impressum: 'https://www.belegcockpit.de/impressum.html',
-          Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
-        };
+  window.addEventListener('load', function () {
+    // ------------------------------------------------------------------
+    // Konstante: Basin Endpoint für das Lead-Formular
+    // ------------------------------------------------------------------
+    const BASIN_ENDPOINT = 'https://usebasin.com/f/03729395fbad';
 
-        document.querySelectorAll('a').forEach(function (a) {
-          const label = (a.textContent || '').trim();
-          if (mapping[label]) {
-            a.setAttribute('href', mapping[label]);
+    // ------------------------------------------------------------------
+    // 1) Footer-Links auf statische Seiten setzen
+    // ------------------------------------------------------------------
+    const mapping = {
+      Impressum: 'https://www.belegcockpit.de/impressum.html',
+      Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
+    };
+
+    document.querySelectorAll('a').forEach(function (a) {
+      const label = (a.textContent || '').trim();
+      if (mapping[label]) {
+        a.setAttribute('href', mapping[label]);
+      }
+    });
+
+    // ------------------------------------------------------------------
+    // 2) Text "Warum nicht einfach DATEV & Co.?" ersetzen
+    // ------------------------------------------------------------------
+    const OLD_TEXTS = [
+      'Warum nicht einfach DATEV & Co.?',
+      'Warum nicht einfach DATEV & Co.?' // evtl. Variante mit Sonderzeichen
+    ];
+    const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
+
+    function replaceHeadlineText() {
+      const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      );
+
+      let node;
+      while ((node = walker.nextNode())) {
+        if (!node.nodeValue) continue;
+        let value = node.nodeValue;
+        let changed = false;
+
+        OLD_TEXTS.forEach(function (oldText) {
+          if (value.includes(oldText)) {
+            value = value.replace(oldText, NEW_TEXT);
+            changed = true;
           }
         });
 
-        // 2) Text "Warum nicht einfach DATEV & Co.?" -> "Warum nicht einfach Standard-Software?"
-        const OLD_TEXTS = [
-          'Warum nicht einfach DATEV & Co.?',
-          'Warum nicht einfach DATEV & Co.?', // Variante mit geschützten Leerzeichen
-        ];
-        const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
-
-        function replaceHeadlineText() {
-          const walker = document.createTreeWalker(
-            document.body,
-            NodeFilter.SHOW_TEXT,
-            null,
-            false
-          );
-
-          let node;
-          while ((node = walker.nextNode())) {
-            if (!node.nodeValue) continue;
-            let value = node.nodeValue;
-            let changed = false;
-
-            OLD_TEXTS.forEach(function (oldText) {
-              if (value.includes(oldText)) {
-                value = value.replace(oldText, NEW_TEXT);
-                changed = true;
-              }
-            });
-
-            if (changed) {
-              node.nodeValue = value;
-            }
-          }
+        if (changed) {
+          node.nodeValue = value;
         }
+      }
+    }
 
-        // 3) Hero-Bild austauschen
-        (function replaceHeroImage() {
-          const NEW_HERO_SRC = 'assets/belegcockpit-hero.png';
+    // ------------------------------------------------------------------
+    // 3) Lead-Formular an Basin anbinden
+    //    (wir schicken selbst per fetch an BASIN_ENDPOINT)
+    // ------------------------------------------------------------------
+    let formWired = false;
 
-          // Wir suchen das große Mockup-Bild über den Alt-Text
-          const heroImg = Array.from(document.querySelectorAll('img')).find(
-            function (img) {
-              const alt = (img.alt || '').toLowerCase();
-              return (
-                alt.includes('belegcockpit') ||
-                alt.includes('cockpit für belegvollständigkeit')
-              );
+    function wireLeadForm() {
+      if (formWired) return;
+
+      const form = document.querySelector('form');
+      if (!form) return;
+
+      // E-Mail-Feld sicherheitshalber benennen
+      const emailInput = form.querySelector('input[type="email"]');
+      if (emailInput && !emailInput.getAttribute('name')) {
+        emailInput.setAttribute('name', 'email');
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); // verhindert die normale Browser-Übermittlung
+
+        const formData = new FormData(form);
+
+        fetch(BASIN_ENDPOINT, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' },
+        })
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error('Basin response not ok');
             }
-          );
 
-          if (heroImg) {
-            heroImg.src = NEW_HERO_SRC;
-          }
-        })();
+            // Formular ausblenden, kurze Danke-Nachricht zeigen
+            form.style.display = 'none';
 
-        // 2) einmal direkt ausführen
-        replaceHeadlineText();
+            const thanks = document.createElement('p');
+            thanks.textContent =
+              'Vielen Dank! Ihre Anfrage ist bei uns eingegangen. Wir melden uns in Kürze persönlich bei Ihnen.';
+            thanks.className =
+              'mt-6 text-sm text-teal-700 text-center';
 
-        // und auf spätere DOM-Änderungen reagieren (falls React nachlädt)
-        const observer = new MutationObserver(function () {
-          replaceHeadlineText();
-        });
-
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true,
-          characterData: true,
-        });
+            form.parentNode.insertBefore(thanks, form.nextSibling);
+          })
+          .catch(function () {
+            alert(
+              'Es gab ein Problem beim Senden des Formulars. Bitte versuchen Sie es später noch einmal oder schreiben Sie direkt an moin@digitalwirt.de.'
+            );
+          });
       });
-    </script>
+
+      formWired = true;
+    }
+
+    // ------------------------------------------------------------------
+    // Initial ausführen
+    // ------------------------------------------------------------------
+    replaceHeadlineText();
+    wireLeadForm();
+
+    // ------------------------------------------------------------------
+    // Auf spätere DOM-Änderungen reagieren (React rendert dynamisch)
+    // ------------------------------------------------------------------
+    const observer = new MutationObserver(function () {
+      replaceHeadlineText();
+      wireLeadForm();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  });
+</script>
   </body>
 </html>
