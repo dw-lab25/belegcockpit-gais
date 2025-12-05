@@ -76,7 +76,7 @@
         height: 0.75rem;
         border-radius: 9999px;
         margin-right: 0.5rem;
-        border: 1px solid rgba(0,0,0,0.08);
+        border: 1px solid rgba(0, 0, 0, 0.08);
       }
       .status-pill {
         display: inline-flex;
@@ -115,152 +115,144 @@
 
     <!-- Importmap für React aus AI Studio -->
     <script type="importmap">
-    {
-      "imports": {
-        "react/": "https://aistudiocdn.com/react@^19.2.0/",
-        "react": "https://aistudiocdn.com/react@^19.2.0",
-        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+      {
+        "imports": {
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+        }
       }
-    }
     </script>
 
-    <!-- Gebautes React-Bundle -->
+    <!-- Gebautes React-Bundle aus AI Studio -->
     <script type="module" crossorigin src="assets/index-KTTnzCpt.js"></script>
   </head>
 
   <body class="bg-slate-50 text-slate-900">
     <!-- React root -->
     <div id="root"></div>
-        <!-- Erfolgs- / Fehler-Meldungen für BasinJS -->
-    <div class="w-form-done" style="display:none; text-align:center; margin:2rem 0; font-size:0.95rem;">
-      Vielen Dank! Ihre Anfrage ist bei uns eingegangen. Wir melden uns in Kürze persönlich bei Ihnen.
+
+    <!-- Fallback-Meldungen, falls React / JS nicht lädt -->
+    <div
+      class="w-form-done"
+      style="
+        display: none;
+        text-align: center;
+        margin: 2rem 0;
+        font-size: 0.95rem;
+      "
+    >
+      Vielen Dank! Ihre Anfrage ist bei uns eingegangen. Wir melden uns in Kürze
+      persönlich bei Ihnen.
     </div>
-    <div class="w-form-fail" style="display:none; text-align:center; margin:2rem 0; font-size:0.95rem; color:#b91c1c;">
-      Oops, etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an moin@digitalwirt.de.
+    <div
+      class="w-form-fail"
+      style="
+        display: none;
+        text-align: center;
+        margin: 2rem 0;
+        font-size: 0.95rem;
+        color: #b91c1c;
+      "
+    >
+      Oops, etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut oder
+      schreiben Sie direkt an moin@digitalwirt.de.
     </div>
 
+    <!-- Nachträgliche Korrekturen & Anpassungen im gerenderten DOM -->
+    <script>
+      window.addEventListener('load', function () {
+        // =========================================
+        // 1) Footer-Links auf statische Seiten setzen
+        // =========================================
+        const mapping = {
+          Impressum: 'https://www.belegcockpit.de/impressum.html',
+          Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
+        };
 
-    <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
-        <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
-        <!-- Nur: Links + Texte + Hero-Bild nachträglich anpassen -->
-      <script>
-    window.addEventListener('load', function () {
-      // ======================================================
-      // 1) Footer-Links auf statische Seiten setzen
-      // ======================================================
-      const mapping = {
-        Impressum: 'https://www.belegcockpit.de/impressum.html',
-        Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
-      };
+        document.querySelectorAll('a').forEach(function (a) {
+          const label = (a.textContent || '').trim();
+          if (mapping[label]) {
+            a.setAttribute('href', mapping[label]);
+          }
+        });
 
-      document.querySelectorAll('a').forEach(function (a) {
-        const label = (a.textContent || '').trim();
-        if (mapping[label]) {
-          a.setAttribute('href', mapping[label]);
-        }
-      });
+        // =========================================
+        // 2) Headline-Text austauschen
+        //    "Warum nicht einfach DATEV & Co.?"
+        //    → "Warum nicht einfach Standard-Software?"
+        // =========================================
+        const OLD_TEXTS = [
+          'Warum nicht einfach DATEV & Co.?',
+          'Warum nicht einfach DATEV & Co.?', // evtl. Variante mit geschützten Leerzeichen
+        ];
+        const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
 
-      // ======================================================
-      // 2) Überschrift anpassen:
-      //    "Warum nicht einfach DATEV & Co.?" ->
-      //    "Warum nicht einfach Standard-Software?"
-      // ======================================================
-      const OLD_TEXTS = [
-        'Warum nicht einfach DATEV & Co.?',
-        'Warum nicht einfach DATEV & Co.?' // Variante mit geschützten Leerzeichen
-      ];
-      const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
+        function replaceHeadlineText() {
+          const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+          );
 
-      function replaceHeadlineText() {
-        const walker = document.createTreeWalker(
-          document.body,
-          NodeFilter.SHOW_TEXT,
-          null,
-          false
-        );
+          let node;
+          while ((node = walker.nextNode())) {
+            if (!node.nodeValue) continue;
+            let value = node.nodeValue;
+            let changed = false;
 
-        let node;
-        while ((node = walker.nextNode())) {
-          if (!node.nodeValue) continue;
-          let value = node.nodeValue;
-          let changed = false;
+            OLD_TEXTS.forEach(function (oldText) {
+              if (value.includes(oldText)) {
+                value = value.replace(oldText, NEW_TEXT);
+                changed = true;
+              }
+            });
 
-          OLD_TEXTS.forEach(function (oldText) {
-            if (value.includes(oldText)) {
-              value = value.replace(oldText, NEW_TEXT);
-              changed = true;
+            if (changed) {
+              node.nodeValue = value;
             }
+          }
+        }
+
+        replaceHeadlineText();
+
+        // Sicherstellen, dass der Text auch nach späteren React-Updates ersetzt bleibt
+        const headlineObserver = new MutationObserver(function () {
+          replaceHeadlineText();
+        });
+        headlineObserver.observe(document.body, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+        });
+
+        // =========================================
+        // 3) Hero-Mockup durch eigenes Bild ersetzen
+        // =========================================
+        try {
+          const heroPlaceholder = Array.from(
+            document.querySelectorAll('div')
+          ).find(function (el) {
+            return (el.textContent || '').trim() === 'BelegCockpit Mockup';
           });
 
-          if (changed) {
-            node.nodeValue = value;
+          if (heroPlaceholder) {
+            heroPlaceholder.textContent = '';
+
+            const img = document.createElement('img');
+            img.src = 'assets/belegcockpit-hero.png';
+            img.alt =
+              'BelegCockpit – Ein Cockpit für Belegvollständigkeit in Ihrer Steuerkanzlei';
+            img.className =
+              'w-full h-auto object-cover rounded-2xl shadow-xl';
+
+            heroPlaceholder.appendChild(img);
           }
+        } catch (e) {
+          console.warn('Hero-Bild konnte nicht ersetzt werden:', e);
         }
-      }
-
-      // einmal direkt ausführen
-      replaceHeadlineText();
-
-      // auf spätere DOM-Änderungen reagieren
-      const headlineObserver = new MutationObserver(function () {
-        replaceHeadlineText();
       });
-      headlineObserver.observe(document.body, {
-        childList: true,
-        subtree: true,
-        characterData: true,
-      });
-
-      // ======================================================
-      // 3) Lead-Formular global an Basin anbinden
-      // ======================================================
-      const BASIN_ENDPOINT = 'https://usebasin.com/f/03729395fbad';
-
-      // Wir hören global auf alle Submit-Events (Capture-Phase),
-      // damit wir das Formular erwischen, auch wenn React beteiligt ist.
-      document.addEventListener(
-        'submit',
-        async function (event) {
-          const form = event.target;
-          if (!(form instanceof HTMLFormElement)) {
-            return;
-          }
-
-          // Sicherstellen, dass es *unser* Formular ist:
-          // (erkennen wir über das Feld "firmName")
-          if (!form.querySelector('#firmName')) {
-            return;
-          }
-
-          // Browser-Submit stoppen (React zeigt trotzdem den Danke-Text)
-          event.preventDefault();
-
-          // sicherstellen, dass das E-Mail-Feld den Namen "email" hat
-          const emailInput = form.querySelector('input[type="email"]');
-          if (emailInput && !emailInput.getAttribute('name')) {
-            emailInput.setAttribute('name', 'email');
-          }
-
-          const formData = new FormData(form);
-          formData.append('_source', 'belegcockpit-landingpage');
-
-          try {
-            console.log('Sende Lead an Basin …');
-            await fetch(BASIN_ENDPOINT, {
-              method: 'POST',
-              body: formData,
-              headers: {
-                Accept: 'application/json',
-              },
-            });
-            console.log('Lead an Basin gesendet.');
-          } catch (err) {
-            console.error('Fehler beim Senden an Basin:', err);
-          }
-        },
-        true // capture: true
-      );
-    });
-  </script>
+    </script>
   </body>
 </html>
