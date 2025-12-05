@@ -126,43 +126,49 @@
 
     <!-- Gebautes React-Bundle -->
     <script type="module" crossorigin src="assets/index-KTTnzCpt.js"></script>
+    <script src="https://js.usebasin.com/v1.js" async></script>
   </head>
 
   <body class="bg-slate-50 text-slate-900">
     <!-- React root -->
     <div id="root"></div>
+        <!-- Erfolgs- / Fehler-Meldungen für BasinJS -->
+    <div class="w-form-done" style="display:none; text-align:center; margin:2rem 0; font-size:0.95rem;">
+      Vielen Dank! Ihre Anfrage ist bei uns eingegangen. Wir melden uns in Kürze persönlich bei Ihnen.
+    </div>
+    <div class="w-form-fail" style="display:none; text-align:center; margin:2rem 0; font-size:0.95rem; color:#b91c1c;">
+      Oops, etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an moin@digitalwirt.de.
+    </div>
+
 
     <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
         <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
         <!-- Nur: Links + Texte + Hero-Bild nachträglich anpassen -->
     <script>
   window.addEventListener('load', function () {
-    // ------------------------------------------------------------------
-    // Konstante: Basin Endpoint für das Lead-Formular
-    // ------------------------------------------------------------------
-    const BASIN_ENDPOINT = 'https://usebasin.com/f/03729395fbad';
-
-    // ------------------------------------------------------------------
+    // ------------------------------------------------------------
     // 1) Footer-Links auf statische Seiten setzen
-    // ------------------------------------------------------------------
+    // ------------------------------------------------------------
     const mapping = {
       Impressum: 'https://www.belegcockpit.de/impressum.html',
       Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
     };
 
-    document.querySelectorAll('a').forEach(function (a) {
-      const label = (a.textContent || '').trim();
-      if (mapping[label]) {
-        a.setAttribute('href', mapping[label]);
-      }
-    });
+    function fixFooterLinks() {
+      document.querySelectorAll('a').forEach(function (a) {
+        const label = (a.textContent || '').trim();
+        if (mapping[label]) {
+          a.setAttribute('href', mapping[label]);
+        }
+      });
+    }
 
-    // ------------------------------------------------------------------
+    // ------------------------------------------------------------
     // 2) Text "Warum nicht einfach DATEV & Co.?" ersetzen
-    // ------------------------------------------------------------------
+    // ------------------------------------------------------------
     const OLD_TEXTS = [
       'Warum nicht einfach DATEV & Co.?',
-      'Warum nicht einfach DATEV & Co.?' // evtl. Variante mit Sonderzeichen
+      'Warum nicht einfach DATEV & Co.?'
     ];
     const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
 
@@ -193,72 +199,48 @@
       }
     }
 
-    // ------------------------------------------------------------------
-    // 3) Lead-Formular an Basin anbinden
-    //    (wir schicken selbst per fetch an BASIN_ENDPOINT)
-    // ------------------------------------------------------------------
-    let formWired = false;
-
-    function wireLeadForm() {
-      if (formWired) return;
-
+    // ------------------------------------------------------------
+    // 3) Lead-Formular für Basin vorbereiten
+    //    (BasinJS übernimmt dann die Übermittlung)
+    // ------------------------------------------------------------
+    function setupBasinForm() {
       const form = document.querySelector('form');
-      if (!form) return;
+      if (!form || form.dataset.basinWired === '1') return;
 
-      // E-Mail-Feld sicherheitshalber benennen
+      // Basin-Endpoint + Grundeinstellungen
+      form.setAttribute('action', 'https://usebasin.com/f/03729395fbad');
+      form.setAttribute('method', 'POST');
+      form.setAttribute('enctype', 'multipart/form-data');
+
+      // BasinJS-Hooks
+      form.setAttribute('data-basin-form', '');
+      form.setAttribute('data-basin-success-action', 'render');
+      // optional: Spam-Schutz, wenn du z.B. reCAPTCHA in Basin aktivierst
+      // form.setAttribute('data-basin-spam-protection', 'recaptcha');
+
+      // sicherstellen, dass das E-Mail-Feld den Namen "email" hat
       const emailInput = form.querySelector('input[type="email"]');
       if (emailInput && !emailInput.getAttribute('name')) {
         emailInput.setAttribute('name', 'email');
       }
 
-      form.addEventListener('submit', function (e) {
-        e.preventDefault(); // verhindert die normale Browser-Übermittlung
-
-        const formData = new FormData(form);
-
-        fetch(BASIN_ENDPOINT, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' },
-        })
-          .then(function (response) {
-            if (!response.ok) {
-              throw new Error('Basin response not ok');
-            }
-
-            // Formular ausblenden, kurze Danke-Nachricht zeigen
-            form.style.display = 'none';
-
-            const thanks = document.createElement('p');
-            thanks.textContent =
-              'Vielen Dank! Ihre Anfrage ist bei uns eingegangen. Wir melden uns in Kürze persönlich bei Ihnen.';
-            thanks.className =
-              'mt-6 text-sm text-teal-700 text-center';
-
-            form.parentNode.insertBefore(thanks, form.nextSibling);
-          })
-          .catch(function () {
-            alert(
-              'Es gab ein Problem beim Senden des Formulars. Bitte versuchen Sie es später noch einmal oder schreiben Sie direkt an moin@digitalwirt.de.'
-            );
-          });
-      });
-
-      formWired = true;
+      form.dataset.basinWired = '1';
     }
 
-    // ------------------------------------------------------------------
+    // ------------------------------------------------------------
     // Initial ausführen
-    // ------------------------------------------------------------------
+    // ------------------------------------------------------------
+    fixFooterLinks();
     replaceHeadlineText();
-    wireLeadForm();
+    setupBasinForm();
 
-    // ------------------------------------------------------------------
-    // Auf spätere DOM-Änderungen reagieren (React rendert dynamisch)
-    // ------------------------------------------------------------------
+    // ------------------------------------------------------------
+    // Reagieren auf spätere DOM-Änderungen (React-Rendering)
+    // ------------------------------------------------------------
     const observer = new MutationObserver(function () {
+      fixFooterLinks();
       replaceHeadlineText();
-      wireLeadForm();
+      setupBasinForm();
     });
 
     observer.observe(document.body, {
