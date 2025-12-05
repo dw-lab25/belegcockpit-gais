@@ -202,7 +202,67 @@
     // 3) Lead-Formular für Basin vorbereiten
     //    (BasinJS übernimmt dann die Übermittlung)
     // ------------------------------------------------------------
+        // 3) Lead-Formular für Basin vorbereiten
+    //    (Basin übernimmt dann die Speicherung)
     function setupBasinForm() {
+      const form = document.querySelector('form');
+      if (!form || form.dataset.basinWired === '1') return;
+
+      // Basin-Endpoint + Grund-Einstellungen (für Fallbacks / spätere Nutzung)
+      form.setAttribute('action', 'https://usebasin.com/f/03729395fbad');
+      form.setAttribute('method', 'POST');
+      form.setAttribute('enctype', 'multipart/form-data');
+
+      // sicherstellen, dass das E-Mail-Feld den Namen "email" hat
+      const emailInput = form.querySelector('input[type="email"]');
+      if (emailInput && !emailInput.getAttribute('name')) {
+        emailInput.setAttribute('name', 'email');
+      }
+
+      // eigentliche Übergabe an Basin via fetch
+      const basinSubmit = async (event) => {
+        try {
+          event.preventDefault(); // Browser-Submit stoppen (React zeigt trotzdem den Danke-Text)
+
+          const formData = new FormData(form);
+
+          // Optional: ein Feld ergänzen, um in Basin die Quelle zu sehen
+          formData.append('_source', 'belegcockpit-landingpage');
+
+          console.log('Sende Lead an Basin …');
+          await fetch('https://usebasin.com/f/03729395fbad', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json',
+            },
+          });
+          console.log('Basin-Request ausgelöst');
+        } catch (err) {
+          console.error('Fehler beim Senden an Basin:', err);
+        }
+      };
+
+      // Listener im Capture-Modus, damit er trotz React sicher ausgeführt wird
+      form.addEventListener('submit', basinSubmit, { capture: true });
+
+      // merken, dass wir das Formular bereits "verkabelt" haben
+      form.dataset.basinWired = '1';
+    }
+
+    // beim ersten Laden einmal ausführen
+    setupBasinForm();
+
+    // und bei späteren DOM-Änderungen erneut prüfen (falls React das Form neu rendert)
+    const basinObserver = new MutationObserver(function () {
+      setupBasinForm();
+    });
+
+    basinObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+ {
       const form = document.querySelector('form');
       if (!form || form.dataset.basinWired === '1') return;
 
