@@ -227,32 +227,71 @@
           characterData: true,
         });
 
-        // =========================================
-        // 3) Hero-Mockup durch eigenes Bild ersetzen
-        // =========================================
-        try {
-          const heroPlaceholder = Array.from(
-            document.querySelectorAll('div')
-          ).find(function (el) {
-            return (el.textContent || '').trim() === 'BelegCockpit Mockup';
-          });
+            // =========================================
+      // =========================================
+  // 3) Hero-Mockup durch eigenes Bild ersetzen
+  //    robust mit MutationObserver
+  // =========================================
+  (function () {
+    const HERO_TEXT = 'BelegCockpit Mockup';
+    const HERO_IMG_SRC = 'assets/belegcockpit-hero.png'; // ggf. Dateinamen anpassen
+    const HERO_IMG_ALT =
+      'BelegCockpit – Ein Cockpit für Belegvollständigkeit in Ihrer Steuerkanzlei';
 
-          if (heroPlaceholder) {
-            heroPlaceholder.textContent = '';
+    let heroReplaced = false;
+    let observer = null;
 
-            const img = document.createElement('img');
-            img.src = 'assets/belegcockpit-hero.png';
-            img.alt =
-              'BelegCockpit – Ein Cockpit für Belegvollständigkeit in Ihrer Steuerkanzlei';
-            img.className =
-              'w-full h-auto object-cover rounded-2xl shadow-xl';
-
-            heroPlaceholder.appendChild(img);
-          }
-        } catch (e) {
-          console.warn('Hero-Bild konnte nicht ersetzt werden:', e);
+    function findHeroElement() {
+      const candidates = document.querySelectorAll('div, section, p, span, h1, h2, h3');
+      for (const el of candidates) {
+        const txt = (el.textContent || '').trim();
+        if (txt === HERO_TEXT) {
+          return el;
         }
-      });
+      }
+      return null;
+    }
+
+    function replaceHero() {
+      if (heroReplaced) return;
+
+      const heroEl = findHeroElement();
+      if (!heroEl) return;
+
+      heroReplaced = true;
+
+      // Inhalt leeren
+      heroEl.textContent = '';
+
+      // Bild einfügen
+      const img = document.createElement('img');
+      img.src = HERO_IMG_SRC;
+      img.alt = HERO_IMG_ALT;
+      img.className = 'w-full h-auto object-cover rounded-2xl shadow-xl';
+
+      heroEl.appendChild(img);
+
+      // Observer deaktivieren, wenn erledigt
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+    }
+
+    // 1x direkt aufrufen (falls React schon gerendert hat)
+    replaceHero();
+
+    // Und für alle späteren DOM-Änderungen lauschen (React-Render)
+    observer = new MutationObserver(function () {
+      replaceHero();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  })();
     </script>
   </body>
 </html>
