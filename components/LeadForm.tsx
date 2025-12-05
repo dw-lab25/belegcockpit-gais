@@ -49,12 +49,46 @@ const LeadForm: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('Form data submitted:', formData);
-    setSubmitted(true);
-  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
+  try {
+    // Formular-Daten in URL-encoded Format umwandeln (Basin versteht das problemlos)
+    const body = new URLSearchParams({
+      firmName: formData.firmName,
+      role: formData.role,
+      employeeCount: formData.employeeCount,
+      clientCount: formData.clientCount,
+      email: formData.email,
+      phone: formData.phone,
+      challenge: formData.challenge,
+    });
+
+    const response = await fetch('https://usebasin.com/f/03729395fbad', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: body.toString(),
+    });
+
+    if (!response.ok) {
+      console.error('Basin error:', response.status, response.statusText);
+      alert('Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.');
+      return;
+    }
+
+    // Optional: Response prüfen, falls du etwas auswerten willst
+    // const data = await response.json();
+    // console.log('Basin response', data);
+
+    setSubmitted(true);
+  } catch (error) {
+    console.error('Network / Fetch error:', error);
+    alert('Beim Senden ist ein technischer Fehler aufgetreten. Bitte versuchen Sie es später erneut.');
+  }
+};
   if (submitted) {
     return (
       <section className="py-20 lg:py-28 bg-white">
