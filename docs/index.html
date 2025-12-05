@@ -160,11 +160,10 @@
     </div>
 
     <!-- Nachträgliche Korrekturen & Anpassungen im gerenderten DOM -->
+        <!-- Links / Texte / Hero-Bild nachträglich anpassen -->
     <script>
       window.addEventListener('load', function () {
-        // =========================================
-        // 1) Footer-Links auf statische Seiten setzen
-        // =========================================
+        // 1) Impressum / Datenschutz auf statische Seiten setzen
         const mapping = {
           Impressum: 'https://www.belegcockpit.de/impressum.html',
           Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
@@ -177,16 +176,12 @@
           }
         });
 
-        // =========================================
-        // 2) Headline-Text austauschen
-        //    "Warum nicht einfach DATEV & Co.?"
-        //    → "Warum nicht einfach Standard-Software?"
-        // =========================================
-        const OLD_TEXTS = [
+        // 2) Headline "Warum nicht einfach DATEV & Co.?" ersetzen
+        const OLD_HEADLINES = [
           'Warum nicht einfach DATEV & Co.?',
-          'Warum nicht einfach DATEV & Co.?', // evtl. Variante mit geschützten Leerzeichen
+          'Warum nicht einfach DATEV & Co.?', // Variante mit geschütztem Leerzeichen
         ];
-        const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
+        const NEW_HEADLINE = 'Warum nicht einfach Standard-Software?';
 
         function replaceHeadlineText() {
           const walker = document.createTreeWalker(
@@ -202,9 +197,9 @@
             let value = node.nodeValue;
             let changed = false;
 
-            OLD_TEXTS.forEach(function (oldText) {
-              if (value.includes(oldText)) {
-                value = value.replace(oldText, NEW_TEXT);
+            OLD_HEADLINES.forEach(function (oldText) {
+              if (value.indexOf(oldText) !== -1) {
+                value = value.replace(oldText, NEW_HEADLINE);
                 changed = true;
               }
             });
@@ -215,83 +210,70 @@
           }
         }
 
-        replaceHeadlineText();
+        // 3) Hero-Bild ersetzen
+        const HERO_IMG_SRC = 'assets/belegcockpit-hero.png';
 
-        // Sicherstellen, dass der Text auch nach späteren React-Updates ersetzt bleibt
-        const headlineObserver = new MutationObserver(function () {
+        function replaceHero() {
+          // Versuch 1: Element mit Klasse "browser-mockup"
+          let container = document.querySelector('.browser-mockup');
+
+          // Versuch 2: Textknoten "BelegCockpit Mockup" finden
+          if (!container) {
+            const walker = document.createTreeWalker(
+              document.body,
+              NodeFilter.SHOW_TEXT,
+              null,
+              false
+            );
+
+            let node;
+            while ((node = walker.nextNode())) {
+              if (
+                node.nodeValue &&
+                node.nodeValue.indexOf('BelegCockpit Mockup') !== -1
+              ) {
+                container = node.parentElement;
+                break;
+              }
+            }
+          }
+
+          if (!container) return;
+
+          // Sicherstellen, dass wir nur einmal ersetzen
+          if (container.dataset.heroReplaced === '1') return;
+          container.dataset.heroReplaced = '1';
+
+          // Inhalt leeren und Bild einfügen
+          container.innerHTML = '';
+
+          const img = document.createElement('img');
+          img.src = HERO_IMG_SRC;
+          img.alt =
+            'Illustration des BelegCockpits – Ein Cockpit für Belegvollständigkeit in Ihrer Steuerkanzlei';
+          img.loading = 'lazy';
+          img.className =
+            'w-full h-auto rounded-3xl shadow-2xl object-cover';
+
+          container.appendChild(img);
+        }
+
+        // Einmal direkt nach dem Laden ausführen
+        replaceHeadlineText();
+        replaceHero();
+
+        // Und auf spätere React-Updates reagieren
+        const observer = new MutationObserver(function () {
           replaceHeadlineText();
+          replaceHero();
         });
-        headlineObserver.observe(document.body, {
+
+        observer.observe(document.body, {
           childList: true,
           subtree: true,
           characterData: true,
         });
-
-            // =========================================
-      // =========================================
-  // 3) Hero-Mockup durch eigenes Bild ersetzen
-  //    robust mit MutationObserver
-  // =========================================
-  (function () {
-    const HERO_TEXT = 'BelegCockpit Mockup';
-    const HERO_IMG_SRC = 'assets/belegcockpit-hero.png'; // ggf. Dateinamen anpassen
-    const HERO_IMG_ALT =
-      'BelegCockpit – Ein Cockpit für Belegvollständigkeit in Ihrer Steuerkanzlei';
-
-    let heroReplaced = false;
-    let observer = null;
-
-    function findHeroElement() {
-      const candidates = document.querySelectorAll('div, section, p, span, h1, h2, h3');
-      for (const el of candidates) {
-        const txt = (el.textContent || '').trim();
-        if (txt === HERO_TEXT) {
-          return el;
-        }
-      }
-      return null;
-    }
-
-    function replaceHero() {
-      if (heroReplaced) return;
-
-      const heroEl = findHeroElement();
-      if (!heroEl) return;
-
-      heroReplaced = true;
-
-      // Inhalt leeren
-      heroEl.textContent = '';
-
-      // Bild einfügen
-      const img = document.createElement('img');
-      img.src = HERO_IMG_SRC;
-      img.alt = HERO_IMG_ALT;
-      img.className = 'w-full h-auto object-cover rounded-2xl shadow-xl';
-
-      heroEl.appendChild(img);
-
-      // Observer deaktivieren, wenn erledigt
-      if (observer) {
-        observer.disconnect();
-        observer = null;
-      }
-    }
-
-    // 1x direkt aufrufen (falls React schon gerendert hat)
-    replaceHero();
-
-    // Und für alle späteren DOM-Änderungen lauschen (React-Render)
-    observer = new MutationObserver(function () {
-      replaceHero();
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
-  })();
+      });
     </script>
   </body>
 </html>
