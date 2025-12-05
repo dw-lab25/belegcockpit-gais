@@ -143,171 +143,124 @@
     <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
         <!-- Nur: Links für Impressum / Datenschutz korrigieren -->
         <!-- Nur: Links + Texte + Hero-Bild nachträglich anpassen -->
-    <script>
-  window.addEventListener('load', function () {
-    // ------------------------------------------------------------
-    // 1) Footer-Links auf statische Seiten setzen
-    // ------------------------------------------------------------
-    const mapping = {
-      Impressum: 'https://www.belegcockpit.de/impressum.html',
-      Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
-    };
+      <script>
+    window.addEventListener('load', function () {
+      // ======================================================
+      // 1) Footer-Links auf statische Seiten setzen
+      // ======================================================
+      const mapping = {
+        Impressum: 'https://www.belegcockpit.de/impressum.html',
+        Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
+      };
 
-    function fixFooterLinks() {
       document.querySelectorAll('a').forEach(function (a) {
         const label = (a.textContent || '').trim();
         if (mapping[label]) {
           a.setAttribute('href', mapping[label]);
         }
       });
-    }
 
-    // ------------------------------------------------------------
-    // 2) Text "Warum nicht einfach DATEV & Co.?" ersetzen
-    // ------------------------------------------------------------
-    const OLD_TEXTS = [
-      'Warum nicht einfach DATEV & Co.?',
-      'Warum nicht einfach DATEV & Co.?'
-    ];
-    const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
+      // ======================================================
+      // 2) Überschrift anpassen:
+      //    "Warum nicht einfach DATEV & Co.?" ->
+      //    "Warum nicht einfach Standard-Software?"
+      // ======================================================
+      const OLD_TEXTS = [
+        'Warum nicht einfach DATEV & Co.?',
+        'Warum nicht einfach DATEV & Co.?' // Variante mit geschützten Leerzeichen
+      ];
+      const NEW_TEXT = 'Warum nicht einfach Standard-Software?';
 
-    function replaceHeadlineText() {
-      const walker = document.createTreeWalker(
-        document.body,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-      );
+      function replaceHeadlineText() {
+        const walker = document.createTreeWalker(
+          document.body,
+          NodeFilter.SHOW_TEXT,
+          null,
+          false
+        );
 
-      let node;
-      while ((node = walker.nextNode())) {
-        if (!node.nodeValue) continue;
-        let value = node.nodeValue;
-        let changed = false;
+        let node;
+        while ((node = walker.nextNode())) {
+          if (!node.nodeValue) continue;
+          let value = node.nodeValue;
+          let changed = false;
 
-        OLD_TEXTS.forEach(function (oldText) {
-          if (value.includes(oldText)) {
-            value = value.replace(oldText, NEW_TEXT);
-            changed = true;
+          OLD_TEXTS.forEach(function (oldText) {
+            if (value.includes(oldText)) {
+              value = value.replace(oldText, NEW_TEXT);
+              changed = true;
+            }
+          });
+
+          if (changed) {
+            node.nodeValue = value;
           }
-        });
-
-        if (changed) {
-          node.nodeValue = value;
         }
       }
-    }
 
-    // ------------------------------------------------------------
-    // 3) Lead-Formular für Basin vorbereiten
-    //    (BasinJS übernimmt dann die Übermittlung)
-    // ------------------------------------------------------------
-        // 3) Lead-Formular für Basin vorbereiten
-    //    (Basin übernimmt dann die Speicherung)
-    function setupBasinForm() {
-      const form = document.querySelector('form');
-      if (!form || form.dataset.basinWired === '1') return;
+      // einmal direkt ausführen
+      replaceHeadlineText();
 
-      // Basin-Endpoint + Grund-Einstellungen (für Fallbacks / spätere Nutzung)
-      form.setAttribute('action', 'https://usebasin.com/f/03729395fbad');
-      form.setAttribute('method', 'POST');
-      form.setAttribute('enctype', 'multipart/form-data');
+      // auf spätere DOM-Änderungen reagieren
+      const headlineObserver = new MutationObserver(function () {
+        replaceHeadlineText();
+      });
+      headlineObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+      });
 
-      // sicherstellen, dass das E-Mail-Feld den Namen "email" hat
-      const emailInput = form.querySelector('input[type="email"]');
-      if (emailInput && !emailInput.getAttribute('name')) {
-        emailInput.setAttribute('name', 'email');
-      }
+      // ======================================================
+      // 3) Lead-Formular global an Basin anbinden
+      // ======================================================
+      const BASIN_ENDPOINT = 'https://usebasin.com/f/03729395fbad';
 
-      // eigentliche Übergabe an Basin via fetch
-      const basinSubmit = async (event) => {
-        try {
-          event.preventDefault(); // Browser-Submit stoppen (React zeigt trotzdem den Danke-Text)
+      // Wir hören global auf alle Submit-Events (Capture-Phase),
+      // damit wir das Formular erwischen, auch wenn React beteiligt ist.
+      document.addEventListener(
+        'submit',
+        async function (event) {
+          const form = event.target;
+          if (!(form instanceof HTMLFormElement)) {
+            return;
+          }
+
+          // Sicherstellen, dass es *unser* Formular ist:
+          // (erkennen wir über das Feld "firmName")
+          if (!form.querySelector('#firmName')) {
+            return;
+          }
+
+          // Browser-Submit stoppen (React zeigt trotzdem den Danke-Text)
+          event.preventDefault();
+
+          // sicherstellen, dass das E-Mail-Feld den Namen "email" hat
+          const emailInput = form.querySelector('input[type="email"]');
+          if (emailInput && !emailInput.getAttribute('name')) {
+            emailInput.setAttribute('name', 'email');
+          }
 
           const formData = new FormData(form);
-
-          // Optional: ein Feld ergänzen, um in Basin die Quelle zu sehen
           formData.append('_source', 'belegcockpit-landingpage');
 
-          console.log('Sende Lead an Basin …');
-          await fetch('https://usebasin.com/f/03729395fbad', {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'Accept': 'application/json',
-            },
-          });
-          console.log('Basin-Request ausgelöst');
-        } catch (err) {
-          console.error('Fehler beim Senden an Basin:', err);
-        }
-      };
-
-      // Listener im Capture-Modus, damit er trotz React sicher ausgeführt wird
-      form.addEventListener('submit', basinSubmit, { capture: true });
-
-      // merken, dass wir das Formular bereits "verkabelt" haben
-      form.dataset.basinWired = '1';
-    }
-
-    // beim ersten Laden einmal ausführen
-    setupBasinForm();
-
-    // und bei späteren DOM-Änderungen erneut prüfen (falls React das Form neu rendert)
-    const basinObserver = new MutationObserver(function () {
-      setupBasinForm();
+          try {
+            console.log('Sende Lead an Basin …');
+            await fetch(BASIN_ENDPOINT, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                Accept: 'application/json',
+              },
+            });
+            console.log('Lead an Basin gesendet.');
+          } catch (err) {
+            console.error('Fehler beim Senden an Basin:', err);
+          }
+        },
+        true // capture: true
+      );
     });
-
-    basinObserver.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
- {
-      const form = document.querySelector('form');
-      if (!form || form.dataset.basinWired === '1') return;
-
-      // Basin-Endpoint + Grundeinstellungen
-      form.setAttribute('action', 'https://usebasin.com/f/03729395fbad');
-      form.setAttribute('method', 'POST');
-      form.setAttribute('enctype', 'multipart/form-data');
-
-      // BasinJS-Hooks
-      form.setAttribute('data-basin-form', '');
-      form.setAttribute('data-basin-success-action', 'render');
-      // optional: Spam-Schutz, wenn du z.B. reCAPTCHA in Basin aktivierst
-      // form.setAttribute('data-basin-spam-protection', 'recaptcha');
-
-      // sicherstellen, dass das E-Mail-Feld den Namen "email" hat
-      const emailInput = form.querySelector('input[type="email"]');
-      if (emailInput && !emailInput.getAttribute('name')) {
-        emailInput.setAttribute('name', 'email');
-      }
-
-      form.dataset.basinWired = '1';
-    }
-
-    // ------------------------------------------------------------
-    // Initial ausführen
-    // ------------------------------------------------------------
-    fixFooterLinks();
-    replaceHeadlineText();
-    setupBasinForm();
-
-    // ------------------------------------------------------------
-    // Reagieren auf spätere DOM-Änderungen (React-Rendering)
-    // ------------------------------------------------------------
-    const observer = new MutationObserver(function () {
-      fixFooterLinks();
-      replaceHeadlineText();
-      setupBasinForm();
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
-  });
-</script>
+  </script>
   </body>
 </html>
