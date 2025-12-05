@@ -161,9 +161,12 @@
 
     <!-- Nachträgliche Korrekturen & Anpassungen im gerenderten DOM -->
         <!-- Links / Texte / Hero-Bild nachträglich anpassen -->
+        <!-- Links / Texte / Hero-Bild / Basin-Form nachträglich anpassen -->
     <script>
       window.addEventListener('load', function () {
-        // 1) Impressum / Datenschutz auf statische Seiten setzen
+        // ================================
+        // 1) Impressum / Datenschutz-Links
+        // ================================
         const mapping = {
           Impressum: 'https://www.belegcockpit.de/impressum.html',
           Datenschutz: 'https://www.belegcockpit.de/datenschutz.html',
@@ -176,10 +179,49 @@
           }
         });
 
-        // 2) Headline "Warum nicht einfach DATEV & Co.?" ersetzen
+        // ======================================
+        // 2) Formular an Basin anbinden (per fetch)
+        // ======================================
+        const BASIN_ENDPOINT = 'https://usebasin.com/f/03729395fbad';
+
+        function setupBasinForm() {
+          const form = document.querySelector('form');
+          if (!form || form.dataset.basinWired === '1') return;
+
+          // Name für E-Mail-Feld sicherstellen
+          const emailInput = form.querySelector('input[type="email"]');
+          if (emailInput && !emailInput.getAttribute('name')) {
+            emailInput.setAttribute('name', 'email');
+          }
+
+          form.addEventListener('submit', function () {
+            try {
+              const formData = new FormData(form);
+
+              // zusätzlicher, „unsichtbarer“ Submit an Basin
+              fetch(BASIN_ENDPOINT, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                  Accept: 'application/json',
+                },
+              }).catch(function (err) {
+                console.error('Basin submit failed:', err);
+              });
+            } catch (err) {
+              console.error('Basin setup error:', err);
+            }
+          });
+
+          form.dataset.basinWired = '1';
+        }
+
+        // ==========================================
+        // 3) Headline "DATEV & Co." -> "Standard-Software"
+        // ==========================================
         const OLD_HEADLINES = [
           'Warum nicht einfach DATEV & Co.?',
-          'Warum nicht einfach DATEV & Co.?', // Variante mit geschütztem Leerzeichen
+          'Warum nicht einfach DATEV & Co.?', // Variante mit geschützten Leerzeichen
         ];
         const NEW_HEADLINE = 'Warum nicht einfach Standard-Software?';
 
@@ -210,14 +252,16 @@
           }
         }
 
-        // 3) Hero-Bild ersetzen
+        // =========================
+        // 4) Hero-Bild ersetzen
+        // =========================
         const HERO_IMG_SRC = 'assets/belegcockpit-hero.png';
 
         function replaceHero() {
-          // Versuch 1: Element mit Klasse "browser-mockup"
+          // Versuch 1: Container mit "browser-mockup"
           let container = document.querySelector('.browser-mockup');
 
-          // Versuch 2: Textknoten "BelegCockpit Mockup" finden
+          // Versuch 2: Text "BelegCockpit Mockup" suchen
           if (!container) {
             const walker = document.createTreeWalker(
               document.body,
@@ -240,17 +284,15 @@
 
           if (!container) return;
 
-          // Sicherstellen, dass wir nur einmal ersetzen
           if (container.dataset.heroReplaced === '1') return;
           container.dataset.heroReplaced = '1';
 
-          // Inhalt leeren und Bild einfügen
           container.innerHTML = '';
 
           const img = document.createElement('img');
           img.src = HERO_IMG_SRC;
           img.alt =
-            'Illustration des BelegCockpits – Ein Cockpit für Belegvollständigkeit in Ihrer Steuerkanzlei';
+            'BelegCockpit – Ein Cockpit für Belegvollständigkeit in Ihrer Steuerkanzlei';
           img.loading = 'lazy';
           img.className =
             'w-full h-auto rounded-3xl shadow-2xl object-cover';
@@ -258,12 +300,18 @@
           container.appendChild(img);
         }
 
-        // Einmal direkt nach dem Laden ausführen
+        // =========================
+        // Initial einmal ausführen
+        // =========================
+        setupBasinForm();
         replaceHeadlineText();
         replaceHero();
 
+        // =========================================
         // Und auf spätere React-Updates reagieren
+        // =========================================
         const observer = new MutationObserver(function () {
+          setupBasinForm();
           replaceHeadlineText();
           replaceHero();
         });
