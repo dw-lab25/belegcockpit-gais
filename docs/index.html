@@ -162,6 +162,7 @@
     <!-- Nachträgliche Korrekturen & Anpassungen im gerenderten DOM -->
         <!-- Links / Texte / Hero-Bild nachträglich anpassen -->
         <!-- Links / Texte / Hero-Bild / Basin-Form nachträglich anpassen -->
+        <!-- Links / Texte / Hero-Bild / Basin-Form nachträglich anpassen -->
     <script>
       window.addEventListener('load', function () {
         // ================================
@@ -180,48 +181,40 @@
         });
 
         // ======================================
-        // 2) Formular an Basin anbinden (per fetch)
+        // 2) Basin-Integration (globaler Submit-Listener)
         // ======================================
         const BASIN_ENDPOINT = 'https://usebasin.com/f/03729395fbad';
 
-        function setupBasinForm() {
-          const form = document.querySelector('form');
-          if (!form || form.dataset.basinWired === '1') return;
+        function handleSubmitToBasin(event) {
+          const form = event.target;
+          if (!form || form.tagName !== 'FORM') return;
 
-          // Name für E-Mail-Feld sicherstellen
-          const emailInput = form.querySelector('input[type="email"]');
-          if (emailInput && !emailInput.getAttribute('name')) {
-            emailInput.setAttribute('name', 'email');
+          try {
+            const formData = new FormData(form);
+
+            fetch(BASIN_ENDPOINT, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                Accept: 'application/json',
+              },
+            }).catch(function (err) {
+              console.error('Basin submit failed:', err);
+            });
+          } catch (err) {
+            console.error('Basin setup error:', err);
           }
-
-          form.addEventListener('submit', function () {
-            try {
-              const formData = new FormData(form);
-
-              // zusätzlicher, „unsichtbarer“ Submit an Basin
-              fetch(BASIN_ENDPOINT, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                  Accept: 'application/json',
-                },
-              }).catch(function (err) {
-                console.error('Basin submit failed:', err);
-              });
-            } catch (err) {
-              console.error('Basin setup error:', err);
-            }
-          });
-
-          form.dataset.basinWired = '1';
         }
+
+        // Listener im Capture-Mode, damit er immer feuert – auch mit React
+        document.addEventListener('submit', handleSubmitToBasin, true);
 
         // ==========================================
         // 3) Headline "DATEV & Co." -> "Standard-Software"
         // ==========================================
         const OLD_HEADLINES = [
           'Warum nicht einfach DATEV & Co.?',
-          'Warum nicht einfach DATEV & Co.?', // Variante mit geschützten Leerzeichen
+          'Warum nicht einfach DATEV & Co.?', // evtl. Variante mit geschützten Leerzeichen
         ];
         const NEW_HEADLINE = 'Warum nicht einfach Standard-Software?';
 
@@ -258,10 +251,8 @@
         const HERO_IMG_SRC = 'assets/belegcockpit-hero.png';
 
         function replaceHero() {
-          // Versuch 1: Container mit "browser-mockup"
           let container = document.querySelector('.browser-mockup');
 
-          // Versuch 2: Text "BelegCockpit Mockup" suchen
           if (!container) {
             const walker = document.createTreeWalker(
               document.body,
@@ -282,9 +273,7 @@
             }
           }
 
-          if (!container) return;
-
-          if (container.dataset.heroReplaced === '1') return;
+          if (!container || container.dataset.heroReplaced === '1') return;
           container.dataset.heroReplaced = '1';
 
           container.innerHTML = '';
@@ -303,7 +292,6 @@
         // =========================
         // Initial einmal ausführen
         // =========================
-        setupBasinForm();
         replaceHeadlineText();
         replaceHero();
 
@@ -311,7 +299,6 @@
         // Und auf spätere React-Updates reagieren
         // =========================================
         const observer = new MutationObserver(function () {
-          setupBasinForm();
           replaceHeadlineText();
           replaceHero();
         });
