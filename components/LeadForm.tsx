@@ -271,10 +271,14 @@ const LeadForm: React.FC = () => {
               </div>
             </form>
 
-            <p className="mt-6 text-xs text-gray-500 text-center">
-              Sie gehen keinerlei Verpflichtung ein. Wir verwenden Ihre Daten ausschließlich, um bezüglich des
-              Pilotprogramms Kontakt mit Ihnen aufzunehmen.
+              <p className="mt-6 text-xs text-gray-500 text-center">
+              Sie gehen keinerlei Verpflichtung ein. Wir verwenden Ihre Daten ausschließlich, um bezüglich des Pilotprogramms Kontakt mit Ihnen aufzunehmen.
             </p>
+            <p className="mt-2 text-[11px] text-gray-400 text-center">
+              Die Formulardaten werden über den Dienst Basin (usebasin.com) verarbeitet. 
+              Weitere Informationen findest du in unserer Datenschutzerklärung.
+            </p>
+
           </div>
         </div>
       </div>
