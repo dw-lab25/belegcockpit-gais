@@ -48,12 +48,11 @@
   </head>
 
   <body class="bg-slate-50 text-slate-900">
-    <!-- Header: identisch aufgebaut wie beim Impressum -->
+    <!-- Header wie beim Impressum -->
     <header class="bg-white border-b border-slate-200">
       <div
         class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between"
       >
-        <!-- Logo / Schriftzug links -->
         <div class="flex items-center gap-3">
           <div
             class="h-9 w-9 rounded-full bg-teal-600 text-white flex items-center justify-center text-sm font-semibold"
@@ -61,16 +60,13 @@
             BC
           </div>
           <div class="leading-tight">
-            <div class="font-semibold text-sm sm:text-base">
-              BelegCockpit
-            </div>
+            <div class="font-semibold text-sm sm:text-base">BelegCockpit</div>
             <div class="text-xs sm:text-sm text-slate-500">
               Cockpit für Belegvollständigkeit
             </div>
           </div>
         </div>
 
-        <!-- Link rechts -->
         <a
           href="index.html"
           class="text-sm font-medium text-teal-700 hover:text-teal-800 hover:underline"
@@ -80,7 +76,7 @@
       </div>
     </header>
 
-    <!-- Hauptinhalt im gleichen Card-Stil wie Impressum -->
+    <!-- Inhalt im Card-Layout -->
     <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
       <section
         class="bg-white border border-slate-200 rounded-2xl shadow-sm px-5 py-7 sm:px-8 sm:py-9 md:px-10 md:py-10"
@@ -100,9 +96,7 @@
 
           <!-- 1. Verantwortlicher -->
           <section class="space-y-3">
-            <h2 class="text-lg sm:text-xl font-semibold">
-              1. Verantwortlicher
-            </h2>
+            <h2 class="text-lg sm:text-xl font-semibold">1. Verantwortlicher</h2>
             <p>
               Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO)
               ist:
@@ -147,119 +141,228 @@
           <!-- 2.1 GitHub Pages -->
           <section class="space-y-3">
             <h3 class="text-base sm:text-lg font-semibold">
-              2.1 Bereitstellung der Website und Server-Logfiles
+              2.1. Bereitstellung der Website und Server-Logfiles
             </h3>
             <p>
-              Diese Website wird über GitHub Pages (GitHub Inc., 88 Colin P
-              Kelly Jr St, San Francisco, CA 94107, USA) gehostet. Beim Aufruf
-              der Website werden durch GitHub automatisch technisch notwendige
-              Daten verarbeitet, insbesondere:
+              Die Website wird über GitHub Pages (GitHub Inc., 88 Colin P Kelly
+              Jr St, San Francisco, CA 94107, USA) gehostet. Beim Aufruf der
+              Website erhebt GitHub in unserem Auftrag technisch notwendige
+              Daten, insbesondere:
             </p>
             <ul class="list-disc list-inside space-y-1 text-sm sm:text-base">
               <li>IP-Adresse des anfragenden Endgeräts</li>
               <li>Datum und Uhrzeit des Zugriffs</li>
               <li>URL und Pfad der abgerufenen Seite</li>
               <li>Übertragene Datenmenge</li>
-              <li>Referrer-URL (zuvor besuchte Seite, sofern übermittelt)</li>
-              <li>Informationen über den Browsertyp und die verwendete Version</li>
+              <li>
+                Referrer-URL (Zuvor besuchte Seite, sofern übermittelt)
+              </li>
+              <li>
+                Informationen über den Browsertyp und die verwendete Version
+              </li>
             </ul>
             <p>
               Die Verarbeitung dieser Daten erfolgt zur Sicherstellung des
               technischen Betriebs, zur Stabilität der Verbindung sowie zu
               Sicherheitszwecken (Art. 6 Abs. 1 lit. f DSGVO). Logdaten werden
-              in der Regel automatisch nach kurzer Zeit gelöscht.
+              in der Regel automatisch nach kurzer Zeit gelöscht, sofern keine
+              weitere Aufbewahrung zu Beweiszwecken erforderlich ist.
             </p>
           </section>
 
-          <!-- 2.2 Kontakt -->
+          <!-- 2.2 TLS -->
           <section class="space-y-3">
             <h3 class="text-base sm:text-lg font-semibold">
-              2.2 Kontaktaufnahme
+              2.2. TLS-/SSL-Verschlüsselung
             </h3>
             <p>
-              Nimmst du per E-Mail Kontakt mit uns auf, werden die von dir
-              übermittelten Daten (z.&nbsp;B. Name, E-Mail-Adresse,
-              Nachrichtentext) zur Bearbeitung der Anfrage verarbeitet.
-              Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche
-              Kommunikation) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes
-              Interesse an der Beantwortung von Anfragen).
+              Diese Website nutzt TLS-/SSL-Verschlüsselung (zu erkennen am
+              „https://“ in der Adresszeile). Dadurch sollen übermittelte Daten
+              vor unbefugter Mitlesung geschützt werden.
             </p>
           </section>
 
-          <!-- 2.3 Pilotformular / Basin -->
+          <!-- 3. Kontaktformular -->
           <section class="space-y-3">
-            <h3 class="text-base sm:text-lg font-semibold">
-              2.3 Nutzung des Pilotformulars (Basin)
-            </h3>
+            <h2 class="text-lg sm:text-xl font-semibold">
+              3. Kontaktformular / Pilotprogramm-Anfrage
+            </h2>
             <p>
-              Für das Pilotanfrage-Formular nutzen wir den Dienst
-              <strong>Basin</strong> (UseBasin Inc., Kanada) als
-              Formular-Backend. Wenn du das Formular ausfüllst und absendest,
-              werden die eingegebenen Daten an Basin übertragen und dort
-              gespeichert. Hierzu gehören insbesondere:
+              Auf der Website stellen wir ein Formular zur Verfügung, über das
+              Sie Ihr Interesse am Pilotprogramm von „BelegCockpit“ mitteilen
+              können.
+            </p>
+            <p>
+              Dabei verarbeiten wir – abhängig von Ihren Eingaben – insbesondere
+              folgende Daten:
             </p>
             <ul class="list-disc list-inside space-y-1 text-sm sm:text-base">
-              <li>Kanzleiname</li>
-              <li>Rolle / Funktion in der Kanzlei</li>
-              <li>Angabe zur Kanzleigröße und Mandantenzahl</li>
-              <li>E-Mail-Adresse und optional Telefonnummer</li>
-              <li>Freitext zur aktuellen Herausforderung</li>
-              <li>Datum und Uhrzeit der Einreichung</li>
-              <li>technische Metadaten (z.&nbsp;B. IP-Adresse, User Agent)</li>
+              <li>Kanzleiname (firmName)</li>
+              <li>Ihre Rolle in der Kanzlei (role)</li>
+              <li>Größe der Kanzlei / Mitarbeitende (employeeCount)</li>
+              <li>Anzahl Fibu-Mandanten (clientCount)</li>
+              <li>E-Mail-Adresse (email)</li>
+              <li>Telefonnummer (optional) (phone)</li>
+              <li>
+                Freitext zu Ihrer aktuellen Herausforderung (challenge)
+              </li>
             </ul>
             <p>
-              Die Verarbeitung erfolgt zur Bearbeitung deiner Pilotanfrage und
-              für die Planung des Early-Access-Programms (Art. 6 Abs. 1 lit. b
-              DSGVO). Zudem haben wir ein berechtigtes Interesse daran, unser
-              Formular technisch stabil und sicher bereitzustellen (Art. 6 Abs.
-              1 lit. f DSGVO).
-            </p>
-            <p>
-              Basin verarbeitet Daten teilweise außerhalb der EU. Wir haben mit
-              Basin ein Auftragsverarbeitungsabkommen (Data Processing
-              Agreement) abgeschlossen, das geeignete Garantien für ein
-              angemessenes Datenschutzniveau vorsieht.
+              Die Verarbeitung erfolgt zum Zweck der Bearbeitung Ihrer Anfrage,
+              zur Planung und Durchführung des Pilotprogramms sowie zur
+              Kontaktaufnahme (Art. 6 Abs. 1 lit. b DSGVO – vorvertragliche
+              Maßnahmen, ggf. Art. 6 Abs. 1 lit. f DSGVO – unser berechtigtes
+              Interesse an effizienter Kommunikation).
             </p>
           </section>
 
-          <!-- 2.4 Speicherdauer -->
+          <!-- 3.1 Basin -->
           <section class="space-y-3">
             <h3 class="text-base sm:text-lg font-semibold">
-              2.4 Speicherdauer
+              3.1. Einsatz des Formulardienstes „Basin“
             </h3>
+            <p>Für die technische Entgegennahme und Verwaltung von Formularanfragen nutzen wir den Dienst „Basin“, betrieben von:</p>
+            <p class="text-sm sm:text-base">
+              Moonshot Ventures Inc.<br />
+              30060 Harris Rd<br />
+              Abbotsford BC V4X 1V6<br />
+              Kanada
+            </p>
             <p>
-              Wir speichern personenbezogene Daten nur so lange, wie dies für
-              die jeweiligen Verarbeitungszwecke erforderlich ist oder wie wir
-              gesetzlich dazu verpflichtet sind. Danach werden die Daten
-              gelöscht oder anonymisiert.
+              Weitere Informationen zum Datenschutz bei Basin finden Sie unter
+              <a
+                href="https://usebasin.com/privacy"
+                class="text-teal-700 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                https://usebasin.com/privacy
+              </a>
+              &nbsp;sowie unter
+              <a
+                href="https://usebasin.com/gdpr"
+                class="text-teal-700 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                https://usebasin.com/gdpr
+              </a>
+              .
+            </p>
+            <p>
+              Die von Ihnen im Formular eingegebenen Daten werden an Basin
+              übermittelt und dort auf Servern gespeichert, um uns die
+              strukturierte Verarbeitung Ihrer Anfrage zu ermöglichen. Mit Basin
+              haben wir einen Vertrag zur Auftragsverarbeitung gemäß Art. 28
+              DSGVO abgeschlossen.
+            </p>
+            <p>
+              Die Datenverarbeitung durch Basin erfolgt ausschließlich in
+              unserem Auftrag und zu den oben genannten Zwecken. Für Kanada
+              besteht ein Angemessenheitsbeschluss der EU-Kommission gemäß Art.
+              45 DSGVO, sodass ein im Wesentlichen angemessenes
+              Datenschutzniveau angenommen wird. Weitere Details finden Sie in
+              den oben genannten Datenschutzhinweisen von Basin.
             </p>
           </section>
 
-          <!-- 2.5 Rechte -->
+          <!-- 3.2 Double Opt-in -->
           <section class="space-y-3">
             <h3 class="text-base sm:text-lg font-semibold">
-              2.5 Deine Rechte
+              3.2. Bestätigungs-E-Mails (Double-Opt-in-ähnlicher Prozess)
             </h3>
             <p>
-              Dir stehen im Rahmen der DSGVO folgende Rechte zu:
+              Nach Absenden des Formulars kann eine automatische Bestätigungs-E-Mail
+              an die von Ihnen angegebene E-Mail-Adresse versendet werden. Damit
+              informieren wir Sie über den Eingang Ihrer Anfrage und stellen
+              sicher, dass die angegebene E-Mail-Adresse Ihnen zugeordnet ist.
+            </p>
+            <p>
+              Die Verarbeitung der E-Mail-Adresse zum Versand dieser
+              Bestätigung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO
+              (Bearbeitung Ihrer Anfrage). Sofern Sie auf diese Bestätigung
+              antworten oder der weiteren Kontaktaufnahme zustimmen,
+              dokumentieren wir diese Einwilligung bzw. Bestätigung, um den
+              Vorgaben der DSGVO nachkommen zu können.
+            </p>
+          </section>
+
+          <!-- 4. E-Mail-Kommunikation -->
+          <section class="space-y-3">
+            <h2 class="text-lg sm:text-xl font-semibold">
+              4. E-Mail-Kommunikation außerhalb des Formulars
+            </h2>
+            <p>
+              Wenn Sie uns per E-Mail kontaktieren, werden die von Ihnen
+              übermittelten Daten (z. B. E-Mail-Adresse, Name, Inhalt der
+              Nachricht) zwecks Bearbeitung der Anfrage und für den Fall von
+              Anschlussfragen gespeichert (Art. 6 Abs. 1 lit. b und lit. f
+              DSGVO).
+            </p>
+          </section>
+
+          <!-- 5. Keine Cookies -->
+          <section class="space-y-3">
+            <h2 class="text-lg sm:text-xl font-semibold">
+              5. Keine Tracking- oder Marketing-Cookies
+            </h2>
+            <p>
+              Auf dieser Website werden derzeit keine Cookies zu Analyse-,
+              Tracking- oder Marketingzwecken eingesetzt. Es werden nur
+              technisch notwendige Daten verarbeitet, um die Website
+              bereitzustellen und Formularanfragen zu ermöglichen.
+            </p>
+          </section>
+
+          <!-- 6. Speicherdauer -->
+          <section class="space-y-3">
+            <h2 class="text-lg sm:text-xl font-semibold">6. Speicherdauer</h2>
+            <p>
+              Wir speichern personenbezogene Daten nur so lange, wie es für die
+              genannten Zwecke erforderlich ist oder gesetzliche
+              Aufbewahrungsfristen bestehen.
+            </p>
+            <p>
+              Kontaktanfragen im Rahmen des Pilotprogramms werden grundsätzlich
+              gelöscht, sobald klar ist, dass kein weiterer Austausch
+              erforderlich ist, spätestens jedoch nach Ablauf von 24 Monaten,
+              sofern keine weitergehenden gesetzlichen Aufbewahrungsfristen
+              entgegenstehen.
+            </p>
+          </section>
+
+          <!-- 7. Rechte -->
+          <section class="space-y-3">
+            <h2 class="text-lg sm:text-xl font-semibold">7. Ihre Rechte</h2>
+            <p>
+              Ihnen stehen im Rahmen der gesetzlichen Vorgaben folgende Rechte
+              zu:
             </p>
             <ul class="list-disc list-inside space-y-1 text-sm sm:text-base">
-              <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
-              <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
-              <li>Recht auf Löschung (Art. 17 DSGVO)</li>
-              <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+              <li>
+                Recht auf Auskunft über die Verarbeitung Ihrer personenbezogenen
+                Daten (Art. 15 DSGVO)
+              </li>
+              <li>Recht auf Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+              <li>
+                Recht auf Löschung („Recht auf Vergessenwerden“, Art. 17 DSGVO)
+              </li>
+              <li>
+                Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)
+              </li>
               <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
               <li>
-                Widerspruchsrecht gegen bestimmte Verarbeitungen (Art. 21 DSGVO)
+                Recht auf Widerspruch gegen bestimmte Verarbeitungen (Art. 21
+                DSGVO)
               </li>
               <li>
-                Beschwerderecht bei einer Aufsichtsbehörde (Art. 77 DSGVO),
-                z.&nbsp;B. bei der zuständigen Datenschutzbehörde deines
-                Bundeslandes oder am Sitz der digitalwirt GmbH.
+                Recht, eine erteilte Einwilligung mit Wirkung für die Zukunft zu
+                widerrufen (Art. 7 Abs. 3 DSGVO)
               </li>
             </ul>
             <p>
-              Zur Ausübung deiner Rechte kannst du dich jederzeit an uns wenden:
+              Zur Ausübung dieser Rechte können Sie sich jederzeit an uns
+              wenden:
               <a
                 href="mailto:moin@digitalwirt.de"
                 class="text-teal-700 hover:underline"
@@ -268,11 +371,27 @@
               </a>
               .
             </p>
+            <p>
+              Zudem haben Sie das Recht, sich bei einer
+              Datenschutz-Aufsichtsbehörde zu beschweren, insbesondere in dem
+              Mitgliedstaat Ihres gewöhnlichen Aufenthaltsorts oder des Orts des
+              mutmaßlichen Verstoßes (Art. 77 DSGVO).
+            </p>
           </section>
 
-          <!-- Stand -->
-          <section class="pt-2 border-t border-slate-100 text-xs text-slate-500">
-            Stand: Dezember 2025
+          <!-- 8. Änderungen -->
+          <section class="space-y-3">
+            <h2 class="text-lg sm:text-xl font-semibold">
+              8. Änderungen dieser Datenschutzerklärung
+            </h2>
+            <p>
+              Wir behalten uns vor, diese Datenschutzerklärung zu aktualisieren,
+              wenn sich rechtliche Vorgaben oder die Ausgestaltung unserer
+              Website bzw. Verarbeitungsprozesse ändern.
+            </p>
+            <p class="text-xs text-slate-500 mt-1">
+              Stand: Dezember 2025
+            </p>
           </section>
         </div>
       </section>
